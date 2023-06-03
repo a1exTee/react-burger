@@ -2,24 +2,24 @@ import React from 'react';
 import { CloseIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import style from './ingredients-details.module.css';
 import PropTypes from 'prop-types';
+import ProductsData from '../../utils/data';
 
 
-const IngredientsDetails = (props: { image: string | undefined; name: string | undefined; proteins: number | undefined; fat: number | undefined; carbohydrates: number | undefined; calories: number | undefined; }) => {
-
+const IngredientsDetails = ({ingredientData}) => {
+console.log(ingredientData);
     return (
         <div className='ingredientDetails'>
-            <CloseIcon type="primary" />
             <div className='ingredientDetailsImage'>
-                <img src={props.image} alt={props.name} />
+                <img src={ingredientData.image} alt={ingredientData.name} />
             </div>
             <div className='ingredientDetailsTitle'>
-                {props.name}
+                {ingredientData.name}
             </div>
             <ul className='ingredientDetailsOrganicSubstances'>
-                <li>{props.proteins}</li>
-                <li>{props.fat}</li>
-                <li>{props.carbohydrates}</li>
-                <li>{props.calories}</li>
+                <li>{ingredientData.proteins}</li>
+                <li>{ingredientData.fat}</li>
+                <li>{ingredientData.carbohydrates}</li>
+                <li>{ingredientData.calories}</li>
             </ul>
         </div>
     )

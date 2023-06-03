@@ -4,9 +4,27 @@ import img from '../../images/crater-loaf.png';
 import ProductsData from '../utils/data';
 import burgerConstructorStyle from './burger-constructor.module.css';
 import PropTypes from 'prop-types';
+import Modal from '../modal/modal';
+import { useState, setState, useEffect } from 'react';
+import OrderDetails from './order-details/order-details';
 
 
-const BurgerConstructor = () => {
+const BurgerConstructor = ({ingredientsData}) => {
+
+    const [order, setOrder] = useState(null);
+    const closeOrderModal = () => setOrder(null);
+    const [amount, setAmount] = useState(0);
+
+    useEffect(() => {
+        let total = 0;
+        const priceOfBuns = 2510;
+        ingredientsData.map((item) => {
+            if (item.type !== "bun") {
+                total += item.price;
+            }
+        });
+        setAmount(priceOfBuns + total);
+    }, [ingredientsData, setAmount]);
    
     return (
         <div className={burgerConstructorStyle.burgerConstructorCol}>
@@ -25,7 +43,7 @@ const BurgerConstructor = () => {
                         thumbnail={img}
                     />
                     {/*ProductsData.map((item, index) => <ConstructorElement key={index} isLocked={true} text={item.name} price={item.price} thumbnail={item.image} />)*/}
-                    
+                    {ingredientsData.map((ingredient, index) => <ConstructorElement key={index}  text={ingredient.name} price={ingredient.price} thumbnail={ingredient.image} />)}
                     <ConstructorElement
                         type="bottom"
                         isLocked={true}
@@ -37,8 +55,13 @@ const BurgerConstructor = () => {
             </div>
             <div className='result' style={{ display: 'flex', justifyContent: 'flex-end', alignItems: 'center' }}>
                 <div style={{ display: 'flex', alignItems: 'center' }}><span className={burgerConstructorStyle.total}>610</span><CurrencyIcon type="primary" /></div>
-                <Button htmlType={'button'}>Оформить заказ</Button>
+                <Button htmlType={'button'} onClick={setOrder}>Оформить заказ</Button>
             </div>
+            {order && (
+                <Modal closeModal={closeOrderModal}>
+                    <OrderDetails />
+                </Modal>
+            )}
         </div>
     )
 }

@@ -6,7 +6,8 @@ import { useState } from 'react';
 import style from './ingredients-group.module.css';
 
 
-//TODO шрифты, верстка, модалка, 
+//TODO модалка, попап Оформить заказ открывает модальное окно с описанием заказа., оверлей,
+//отправьте ссылку на пул-реквест, открытый из ветки sprint-1/step-2 в main, через интерфейс Практикума. 
 
 export const getGroup = (tabVal) => {
     //console.log('123');

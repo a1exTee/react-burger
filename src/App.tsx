@@ -24,8 +24,8 @@ function App() {
     setState({ ...state, hasError: false, isLoading: true });
     
     fetch(apiUrl)
-        .then(res => res.json())
-        .then(data => setState({ data: data, isLoading: false, hasError: false }))
+        .then(res => res.json() as Promise<{sucsess: Boolean; data: []}>)
+        .then(({data}) => setState({ data: data, isLoading: false, hasError: false }))
         .catch(e => setState({ ...state, isLoading: false, hasError: true }))
     };
 
@@ -36,10 +36,7 @@ function App() {
 
     const { data, isLoading, hasError } = state;
     
-    console.log(data.data.length);
-    console.log(data.data.length);
-    //console.log(isLoading);
-    //console.log(hasError);
+    
 
   return (
     <main className="App">
@@ -52,9 +49,13 @@ function App() {
             {hasError && 'Произошла ошибка'}
             {!isLoading &&
               !hasError &&
-              <BurgerIngredients ingredientsData={state.data.data} />}
+              data.length &&
+              <>
+              <BurgerIngredients ingredientsData={state.data} />
               <div className='space'></div>
-              <BurgerConstructor />
+              <BurgerConstructor ingredientsData={state.data} />
+              </>
+              }
             </div>
           </section>
           </ErrorBoundary>

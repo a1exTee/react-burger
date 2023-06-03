@@ -1,18 +1,15 @@
-import React, { useEffect, useMemo } from 'react';
-import ReactDOM, { createPortal } from 'react-dom';
 import PropTypes from 'prop-types';
-//import Modal from '../modal';
 
-const modalRoot = document.getElementById("react-overlay");
-console.log(modalRoot);
+import OverlayStyles from './modal-overlay.module.css';
 
-//modalRoot.addEventListener('Click', )
-
-const ModalOverlay = () => {
+function ModalOverlay({ onClick }) {
     return (
-        <div className='overlay'>
-        </div>
-    );
+        <div className={OverlayStyles.overlay} onClick={onClick}></div>
+    )
+}
+
+ModalOverlay.propTypes = {
+    onClick: PropTypes.func.isRequired
 }
 
 export default ModalOverlay;
