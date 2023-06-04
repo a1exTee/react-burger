@@ -1,5 +1,5 @@
 import React from 'react';
-import { ConstructorElement, Button, CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components';
+import { ConstructorElement, Button, CurrencyIcon, DragIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import img from '../../images/crater-loaf.png';
 import ProductsData from '../utils/data';
 import burgerConstructorStyle from './burger-constructor.module.css';
@@ -27,9 +27,11 @@ const BurgerConstructor = ({ingredientsData}) => {
     }, [ingredientsData, setAmount]);
    
     return (
+        <>
+        {ingredientsData.length !== 0 &&
         <div className={burgerConstructorStyle.burgerConstructorCol}>
-            <div className={`${burgerConstructorStyle.burgerConstructorContent} custom-scroll`}>
-                <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
+            <div className={`${burgerConstructorStyle.burgerConstructorContent}`}>
+                <div className={`${burgerConstructorStyle.burgerConstructorList}`}>
                     <ConstructorElement
                         type="top"
                         isLocked={true}
@@ -37,13 +39,26 @@ const BurgerConstructor = ({ingredientsData}) => {
                         price={200}
                         thumbnail={img}
                     />
-                    <ConstructorElement
-                        text="Краторная булка N-200i (верх)"
-                        price={50}
-                        thumbnail={img}
-                    />
+
+                    <div className={`${burgerConstructorStyle.burgerConstructorData} custom-scroll`}>
+                        {ingredientsData.map((ingredient) => {
+                            if (ingredient.type !== "bun") {
+                                return (
+                                    <div key={ingredient._id} className={`${burgerConstructorStyle.ingredient} mt-4 mr-4`}>
+                                        <DragIcon type="primary" />
+                                        <ConstructorElement
+                                            text={ingredient.name}
+                                            price={ingredient.price}
+                                            thumbnail={ingredient.image}
+                                        />
+                                    </div>
+                                )
+                            }
+                        })}
+                    </div>
+
                     {/*ProductsData.map((item, index) => <ConstructorElement key={index} isLocked={true} text={item.name} price={item.price} thumbnail={item.image} />)*/}
-                    {ingredientsData.map((ingredient, index) => <ConstructorElement key={index}  text={ingredient.name} price={ingredient.price} thumbnail={ingredient.image} />)}
+                  
                     <ConstructorElement
                         type="bottom"
                         isLocked={true}
@@ -53,8 +68,8 @@ const BurgerConstructor = ({ingredientsData}) => {
                     />
                 </div>
             </div>
-            <div className='result' style={{ display: 'flex', justifyContent: 'flex-end', alignItems: 'center' }}>
-                <div style={{ display: 'flex', alignItems: 'center' }}><span className={burgerConstructorStyle.total}>610</span><CurrencyIcon type="primary" /></div>
+            <div className={`${burgerConstructorStyle.result}`}>
+                <div className={`${burgerConstructorStyle.resultContent}`}><span className={burgerConstructorStyle.total}>610</span><CurrencyIcon type="primary" /></div>
                 <Button htmlType={'button'} onClick={setOrder}>Оформить заказ</Button>
             </div>
             {order && (
@@ -63,16 +78,25 @@ const BurgerConstructor = ({ingredientsData}) => {
                 </Modal>
             )}
         </div>
+        }
+        </>
     )
 }
 
 
-BurgerConstructor.propTypes = {
+BurgerConstructor: PropTypes.shape({
     price: PropTypes.number,
     image: PropTypes.string,
     name: PropTypes.string,
     isLocked: PropTypes.bool,
     type: PropTypes.string,
-}; 
+});
+/*BurgerConstructor.propTypes = {
+    price: PropTypes.number,
+    image: PropTypes.string,
+    name: PropTypes.string,
+    isLocked: PropTypes.bool,
+    type: PropTypes.string,
+}; */
 
 export default BurgerConstructor;

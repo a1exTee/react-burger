@@ -4,11 +4,11 @@ import './index.css';
 import './fonts/fonts.css';
 //import '@ya.praktikum/react-developer-burger-ui-components/dist/ui/fonts/fonts.css';
 //import "./node_modules/@ya.praktikum/react-developer-burger-ui-components/dist/ui/fonts/fonts.css"; 
-import App from './App';
+import App from './components/app/App';
 import reportWebVitals from './reportWebVitals';
 
 const root = ReactDOM.createRoot(
-  document.getElementById('root') as HTMLElement
+  document.getElementById('root')
 );
 root.render(
   <React.StrictMode>

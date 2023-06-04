@@ -18,7 +18,7 @@ const BurgerIngredients = ({ingredientsData}) => {
     return (
       <section className={burgerIngredientsStyle.burgerIngredientsCol}>
         <h1>Соберите бургер</h1>
-        <div style={{ display: 'flex' }}>
+        <div className={burgerIngredientsStyle.tabWrap}>
           <Tab value="bun" active={currentTab === 'bun'} onClick={setCurrentTab}>
           Булки
           </Tab>

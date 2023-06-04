@@ -6,7 +6,7 @@ import ProductsData from '../../utils/data';
 
 
 const IngredientsDetails = ({ingredientData}) => {
-console.log(ingredientData);
+
     return (
         <div className='ingredientDetails'>
             <div className='ingredientDetailsImage'>

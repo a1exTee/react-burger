@@ -1,17 +1,18 @@
 .burgerConstructorCol {
     padding: 100px 16px 52px;
-    border: 2px solid #4C4CFF;
     border-top: 0;
     width: calc(50% - 20px);
     flex: 1;
 }
 
 .burgerConstructorContent {
-    max-height: 912px;
-    overflow-y: auto;
-    composes: custom-scroll from global;
     margin-bottom: 40px;
-    
+}
+
+.burgerConstructorList {
+    display: 'flex';
+    flex-direction: 'column';
+    gap: '10px';
 }
 
 .total {
@@ -26,4 +27,28 @@
     margin-right: 40px;
     width: 33px;
     height: 33px
+}
+
+.burgerConstructorData {
+    max-height: 464px;
+    overflow-y: auto;
+    max-width: 536px;
+    composes: custom-scroll from global;
+    margin-left: auto;
+}
+
+.ingredient {
+    display: flex;
+    align-items: center;
+}
+
+.result {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+}
+
+.resultContent {
+    display: flex;
+    align-items: center;
 }
