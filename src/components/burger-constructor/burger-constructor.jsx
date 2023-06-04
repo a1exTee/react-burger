@@ -84,19 +84,13 @@ const BurgerConstructor = ({ingredientsData}) => {
 }
 
 
-BurgerConstructor: PropTypes.shape({
+
+BurgerConstructor.propTypes = {
     price: PropTypes.number,
     image: PropTypes.string,
     name: PropTypes.string,
     isLocked: PropTypes.bool,
     type: PropTypes.string,
-});
-/*BurgerConstructor.propTypes = {
-    price: PropTypes.number,
-    image: PropTypes.string,
-    name: PropTypes.string,
-    isLocked: PropTypes.bool,
-    type: PropTypes.string,
-}; */
+}; 
 
 export default BurgerConstructor;

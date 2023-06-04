@@ -27,12 +27,14 @@ function Modal({ title, closeModal, children }) {
         <>
             <ModalOverlay onClick={closeModal} />
             <div className={`${modalStyles.modal} p-10`}>
-                <div className={modalStyles.header}>
-                    <h2 className='text text_type_main-large'>{title}</h2>
-                    <CloseIcon type='primary' onClick={closeModal} />
-                </div>
-                <div className={modalStyles.content}>
-                    {children}
+                <div className={`${modalStyles.modalContent}`}>
+                    <div className={modalStyles.wrapCloseIcon}><CloseIcon type='primary' onClick={closeModal} /></div>
+                    <div className={modalStyles.modalHeader}>
+                        <h2 className='text text_type_main-large'>{title}</h2>
+                    </div>
+                    <div className={modalStyles.content}>
+                        {children}
+                    </div>
                 </div>
             </div>
         </>

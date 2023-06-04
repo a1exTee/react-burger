@@ -82,13 +82,33 @@ const BurgerIngredients = ({ingredientsData}) => {
 }
 
 
+BurgerIngredients: PropTypes.shape({
+        image: PropTypes.string.isRequired,
+        name: PropTypes.string.isRequired,
+        type: PropTypes.string.isRequired,
+        price: PropTypes.number.isRequired,
+        image_large: PropTypes.string.isRequired,
+        proteins: PropTypes.number.isRequired,
+        fat: PropTypes.number.isRequired,
+        carbohydrates: PropTypes.number.isRequired,
+        calories: PropTypes.number.isRequired,
+        _id: PropTypes.string.isRequired,
+  });
 
-BurgerIngredients.propTypes = {
-  price: PropTypes.number,
-  image: PropTypes.string,
-  name: PropTypes.string,
-  isLocked: PropTypes.bool,
-  type: PropTypes.string,
-}; 
+/*BurgerIngredients.propTypes = {
+    ingredientsData: PropTypes.arrayOf(PropTypes.shape({
+        image: PropTypes.string.isRequired,
+        name: PropTypes.string.isRequired,
+        type: PropTypes.string.isRequired,
+        price: PropTypes.number.isRequired,
+        image_large: PropTypes.string.isRequired,
+        proteins: PropTypes.number.isRequired,
+        fat: PropTypes.number.isRequired,
+        carbohydrates: PropTypes.number.isRequired,
+        calories: PropTypes.number.isRequired,
+        _id: PropTypes.string.isRequired,
+    }).isRequired).isRequired,
+};*/
+
 
 export default BurgerIngredients;

@@ -8,18 +8,18 @@ import ProductsData from '../../utils/data';
 const IngredientsDetails = ({ingredientData}) => {
 
     return (
-        <div className='ingredientDetails'>
-            <div className='ingredientDetailsImage'>
-                <img src={ingredientData.image} alt={ingredientData.name} />
+        <div className={style.ingredientDetails}>
+            <div className={style.ingredientDetailsImage}>
+                <img src={ingredientData.image} className={style.ingredientDetailsImage} alt={ingredientData.name} />
             </div>
-            <div className='ingredientDetailsTitle'>
+            <div className={style.ingredientDetailsTitle}>
                 {ingredientData.name}
             </div>
-            <ul className='ingredientDetailsOrganicSubstances'>
-                <li>{ingredientData.proteins}</li>
-                <li>{ingredientData.fat}</li>
-                <li>{ingredientData.carbohydrates}</li>
-                <li>{ingredientData.calories}</li>
+            <ul className={style.ingredientDetailsOrganicSubstances}>
+                <li className={style.ingredientDetailsOrganicSubstancesItem}><span>Калории,ккал</span>{ingredientData.proteins}</li>
+                <li className={style.ingredientDetailsOrganicSubstancesItem}><span>Белки, г</span>{ingredientData.fat}</li>
+                <li className={style.ingredientDetailsOrganicSubstancesItem}><span>Жиры, г</span>{ingredientData.carbohydrates}</li>
+                <li className={style.ingredientDetailsOrganicSubstancesItem}><span>Углеводы, г</span>{ingredientData.calories}</li>
             </ul>
         </div>
     )

@@ -12,3 +12,17 @@
     background: #1C1C21;
     z-index: 1;
 }
+
+.modalContent {
+    position: relative;;
+}
+
+.wrapCloseIcon {
+    position: absolute;
+    right: 0;
+    top: 0;
+}
+
+.modalHeader {
+    
+}
