@@ -1,11 +1,9 @@
 import React, { useState, setState } from 'react';
 import { Tab, CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components';
-//import IngredientsGroup from './ingredients-group/ingredients-group';
 import IngredientsItem from './ingredients-item/ingredients-item';
 import burgerIngredientsStyle from './burger-ingredients.module.css';
-import PropTypes from 'prop-types';
-//import ProductsData from '../utils/data';
-//import { getGroup } from './ingredients-group/ingredients-group';
+import PropTypes from "prop-types";
+import { dataPropTypes } from "../../components/utils/prop-types";
 import Modal from '../modal/modal';
 import IngredientsDetails from './ingredients-details/ingredients-details';
 
@@ -32,7 +30,7 @@ const BurgerIngredients = ({ingredientsData}) => {
         <div className={burgerIngredientsStyle.tabContent}>
           <div>
               <h2>Булки</h2>
-              <div>
+              <div className={burgerIngredientsStyle.ingredientsGroup}>
                   {ingredientsData.map((ingredient, index) => {
                       if (ingredient.type === "bun") {
                           return (
@@ -43,7 +41,7 @@ const BurgerIngredients = ({ingredientsData}) => {
               </div>
 
               <h2>Соусы</h2>
-              <div>
+              <div className={burgerIngredientsStyle.ingredientsGroup}>
                   {ingredientsData.map((ingredient, index) => {
                       if (ingredient.type === "sauce") {
                           return (
@@ -54,7 +52,7 @@ const BurgerIngredients = ({ingredientsData}) => {
               </div>
 
               <h2>Начинки</h2>
-              <div>
+              <div className={burgerIngredientsStyle.ingredientsGroup}>
                   {ingredientsData.map((ingredient, index) => {
                       if (ingredient.type === "main") {
                           return (
@@ -70,45 +68,15 @@ const BurgerIngredients = ({ingredientsData}) => {
                   <IngredientsDetails ingredientData={ingredientInModal} />
               </Modal>
           )}
-          {/*<IngredientsGroup tabVal={currentTab} />*/}
-
-          {/*ingredientsData.map((ingredient, index) => <IngredientsItem key={index} data={ingredient} />)*/}
-          {/*ProductsData.map(burgersIngredient => <IngredientsItem key={burgersIngredient._id} price={burgersIngredient.price} name={burgersIngredient.name} image={burgersIngredient.image} />)*/}
-
         </div>
       </section>
     )
 
 }
 
-
-BurgerIngredients: PropTypes.shape({
-        image: PropTypes.string.isRequired,
-        name: PropTypes.string.isRequired,
-        type: PropTypes.string.isRequired,
-        price: PropTypes.number.isRequired,
-        image_large: PropTypes.string.isRequired,
-        proteins: PropTypes.number.isRequired,
-        fat: PropTypes.number.isRequired,
-        carbohydrates: PropTypes.number.isRequired,
-        calories: PropTypes.number.isRequired,
-        _id: PropTypes.string.isRequired,
-  });
-
-/*BurgerIngredients.propTypes = {
-    ingredientsData: PropTypes.arrayOf(PropTypes.shape({
-        image: PropTypes.string.isRequired,
-        name: PropTypes.string.isRequired,
-        type: PropTypes.string.isRequired,
-        price: PropTypes.number.isRequired,
-        image_large: PropTypes.string.isRequired,
-        proteins: PropTypes.number.isRequired,
-        fat: PropTypes.number.isRequired,
-        carbohydrates: PropTypes.number.isRequired,
-        calories: PropTypes.number.isRequired,
-        _id: PropTypes.string.isRequired,
-    }).isRequired).isRequired,
-};*/
+BurgerIngredients.propTypes = {
+    data: PropTypes.arrayOf(PropTypes.shape(dataPropTypes).isRequired),
+};
 
 
 export default BurgerIngredients;

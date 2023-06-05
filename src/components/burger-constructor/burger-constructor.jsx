@@ -4,6 +4,7 @@ import img from '../../images/crater-loaf.png';
 import ProductsData from '../utils/data';
 import burgerConstructorStyle from './burger-constructor.module.css';
 import PropTypes from 'prop-types';
+import { dataPropTypes } from '../../components/utils/prop-types';
 import Modal from '../modal/modal';
 import { useState, setState, useEffect } from 'react';
 import OrderDetails from './order-details/order-details';
@@ -86,11 +87,7 @@ const BurgerConstructor = ({ingredientsData}) => {
 
 
 BurgerConstructor.propTypes = {
-    price: PropTypes.number,
-    image: PropTypes.string,
-    name: PropTypes.string,
-    isLocked: PropTypes.bool,
-    type: PropTypes.string,
-}; 
+    ingredientsData: PropTypes.arrayOf(PropTypes.shape(dataPropTypes).isRequired),
+  };
 
 export default BurgerConstructor;

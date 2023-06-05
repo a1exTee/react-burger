@@ -15,8 +15,4 @@ function OrderDetails() {
     )
 }
 
-/*OrderDetails.propTypes = {
-    id: PropTypes.number.isRequired,
-}*/
-
 export default OrderDetails;
