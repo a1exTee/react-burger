@@ -1,13 +1,25 @@
-import { Counter, CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components';
+import { Counter, CurrencyIcon, DragIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import style from './ingredients-item.module.css';
+import { useDrag } from "react-dnd";
 
-
-const IngredientsItem = ({ item, setIngredientInModal }) => {
+  
+const IngredientsItem = ({ item, setIngredientInModal, counter }) => {
+    const { _id } = item;
+  
+    const [, ref, refImg] = useDrag({
+        type: "ingredientDND",
+        item: { _id },
+    });
     return (
-        <div className={style.ingredientItem} onClick={() => setIngredientInModal(item)}>
-           { item.count > 0 ? <Counter count={item.count} size="default" extraClass="m-1" /> : "" }
+        <li 
+        className={style.ingredientItem} 
+        onClick={setIngredientInModal}
+        ref={ref}
+        id={item._id}
+        >
+           { counter > 0 && (<Counter count={counter} size="default" extraClass="m-1" />) }
             <div className='ingredientItemImage'>
-                <img src={item.image} alt={item.name} />
+                <img ref={refImg} src={item.image} alt={item.name} />
             </div>
             <div className='ingredientItemPrice'>
                 {item.price}
@@ -16,7 +28,7 @@ const IngredientsItem = ({ item, setIngredientInModal }) => {
             <div className='ingredientItemTitle'>
                 {item.name}
             </div>
-        </div>
+        </li>
     )
 }
 

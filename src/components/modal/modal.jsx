@@ -11,6 +11,7 @@ import modalStyles from './modal.module.css';
 const modalRoot = document.getElementById('react-modals');
 
 function Modal({ title, closeModal, children }) {
+    console.log(closeModal);
     useEffect(() => {
         const handleEsc = (e) => {
             e.key === 'Escape' && closeModal();
@@ -22,6 +23,7 @@ function Modal({ title, closeModal, children }) {
             document.removeEventListener('keydown', handleEsc);
         }
     }, [closeModal]);
+    
 
     return ReactDOM.createPortal(
         <>

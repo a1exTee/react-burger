@@ -21,3 +21,10 @@
     display: block;
     clear: both;
 }
+
+.tabContentItem {
+    display: none;
+}
+.tabContentItem.active {
+    display: block;
+}
