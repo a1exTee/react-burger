@@ -4,23 +4,30 @@ import { BurgerIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import { ListIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import { ProfileIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import { JSX } from 'react/jsx-runtime';
+import style from './app-header.module.css';
 
-const AppHeader = (props: any) => {
+const AppHeader = () => {
 
-      return <header className="app-header">
-                <nav style={{ display: 'flex' }}>
-                    <div className="app-header__item">
-                        <BurgerIcon type="primary" />
+      return <header className={style.appHeader}>
+                <nav className={style.appHeaderNav}>
+                    <div className={style.appHeaderItem}>
+                        <span className={`mr-4`}>
+                            <BurgerIcon type="primary" />
+                        </span>
                         <span>Конструктор</span>
                     </div>
-                    <div className="app-header__item">
+                    <div className={style.appHeaderItem}>
+                    <span className={`mr-4`}>
                         <ListIcon type="primary" />
+                        </span>
                         <span>Лента заказов</span>
                     </div>
                 </nav>
                 <div className='logo'><Logo /></div>
-                <div className="app-header__item">
+                <div className={style.appHeaderItem}>
+                <span className={`mr-4`}>
                     <ProfileIcon type="primary" />
+                    </span>
                     <span>Личный кабинет</span>
                 </div>
             </header>;

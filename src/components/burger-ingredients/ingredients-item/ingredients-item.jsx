@@ -1,36 +1,23 @@
-import React, { useState } from 'react';
 import { Counter, CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import style from './ingredients-item.module.css';
-import PropTypes from 'prop-types';
-//import Modal from '../../modal/modal';
 
 
-
-const IngredientsItem = ({props}) => {
-    //const [modalActive, setModalActive] = useState(false);
-
-    console.log(props);
+const IngredientsItem = ({ item, setIngredientInModal }) => {
     return (
-        <div className={style.ingredientItem}>
-            <Counter count={1} size='default' extraClass='m-1' />
+        <div className={style.ingredientItem} onClick={() => setIngredientInModal(item)}>
+           { item.count > 0 ? <Counter count={item.count} size="default" extraClass="m-1" /> : "" }
             <div className='ingredientItemImage'>
-                <img src={props.image} alt={props.name} />
+                <img src={item.image} alt={item.name} />
             </div>
             <div className='ingredientItemPrice'>
-                {props.price}
+                {item.price}
                 <CurrencyIcon type='primary' />
             </div>
             <div className='ingredientItemTitle'>
-                {props.name}
+                {item.name}
             </div>
         </div>
     )
 }
-
-IngredientsItem.propTypes = {
-    price: PropTypes.number,
-    image: PropTypes.string,
-    name: PropTypes.string
-}; 
 
 export default IngredientsItem;
