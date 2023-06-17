@@ -6,38 +6,22 @@ import BurgerIngredients from '../burger-ingredients/burger-ingredients';
 import BurgerConstructor from '../burger-constructor/burger-constructor';
 import ModalOverlay from '../modal/modal-overlay/modal-overlay';
 import ErrorBoundary from '../error-boundary/error-boundary';
+import { DndProvider } from "react-dnd";
+import { HTML5Backend } from "react-dnd-html5-backend";
+import {getIngredients} from '../services/actions/burger-ingredients/burger-ingredients';
+import { useSelector, useDispatch } from "react-redux";
 
 
 function App() {
 
-  const apiUrl = `https://norma.nomoreparties.space/api/ingredients`;
+  const dispatch = useDispatch();
+  const { ingredientsChecker } = useSelector(
+    (store) => store.ingredients.ingredientsChecker
+  );
 
-  const [state, setState] = useState({
-    isLoading: false,
-    hasError: false,
-    data: []
-  });
-
-  const getIngredients = () => {
-    setState({ ...state, hasError: false, isLoading: true });
-    
-    fetch(apiUrl)
-        .then((res) => {
-          if(!res.ok) throw new Error(res.status);
-          else return res.json();
-        })
-        .then(({data}) => setState({ data: data, isLoading: false, hasError: false }))
-        .catch(e => setState({ ...state, isLoading: false, hasError: true }))
-    };
-
-    React.useEffect(() => {
-      getIngredients();
-    }, []);
-
-
-    const { data, isLoading, hasError } = state;
-    
-    
+  React.useEffect(() => {
+    dispatch(getIngredients());
+  }, [dispatch]);
 
   return (
     <main className={style.App}>
@@ -46,22 +30,17 @@ function App() {
           <AppHeader />
           <section>
             <div className={style.appContent}>
-              {isLoading && 'Загрузка...'}
-              {hasError && 'Произошла ошибка'}
-              {!isLoading &&
-                !hasError &&
-                data.length &&
-                <>
-                <BurgerIngredients ingredientsData={state.data} />
-                <div className='space'></div>
-                <BurgerConstructor ingredientsData={state.data} />
-                </>
-                }
+              {!ingredientsChecker ? (
+                <DndProvider backend={HTML5Backend}>
+                  <BurgerIngredients />
+                  <div className='space'></div>
+                  <BurgerConstructor />
+                </DndProvider>
+              ) : ('')}
             </div>
           </section>
           </ErrorBoundary>
         </div>
-        
     </main>
   );
 }

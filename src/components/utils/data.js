@@ -231,4 +231,15 @@ const ProductsData =
    __v: PropTypes.number,
 }; 
 
+export const apiUrl = `https://norma.nomoreparties.space/api/`;
+
+const response = (res) => {
+   return res.ok ? res.json() : res.json().then((err) => Promise.reject(err));
+ };
+ 
+ export const requestIngredients = (url, options) => {
+   return fetch(url, options).then(response);
+ };
+
+
 export default ProductsData;
