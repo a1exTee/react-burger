@@ -107,6 +107,7 @@ const BurgerConstructor = () => {
         if (ingredientsConstructor.length > 2) {
           dispatch(sendOrder(ingredientsConstructor));
           toggleModal();
+          totalPrice(ingredientsConstructor);
         }
       };
     
