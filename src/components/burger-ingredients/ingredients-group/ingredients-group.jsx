@@ -1,7 +1,7 @@
 import React from 'react';
 import { Tab } from '@ya.praktikum/react-developer-burger-ui-components';
 import IngredientsItem from '../ingredients-item/ingredients-item';
-import ProductsData from '../../utils/data';
+import ProductsData from '../../../utils/data';
 import { useState } from 'react';
 import style from './ingredients-group.module.css';
 
@@ -10,12 +10,9 @@ import style from './ingredients-group.module.css';
 //отправьте ссылку на пул-реквест, открытый из ветки sprint-1/step-2 в main, через интерфейс Практикума. 
 
 export const getGroup = (tabVal) => {
-    //console.log('123');
     ProductsData.map(item => {
         
         if(item.type === tabVal){
-            //console.log(item.type);
-            //console.log(tabVal);
             return (<IngredientsItem key={item._id} name={item.name} price={item.price} image={item.image} />)
         }
     });
@@ -24,7 +21,6 @@ export const getGroup = (tabVal) => {
 const IngredientsGroup = (props) => {
 
     const [currentList, setCurrenList] = useState(getGroup(props.tabVal));
-    console.log(currentList);
     return (
         <>
             <div className='ingredientGroup'>

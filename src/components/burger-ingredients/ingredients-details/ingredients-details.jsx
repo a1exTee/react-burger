@@ -1,13 +1,10 @@
-import React from 'react';
-import { CloseIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import style from './ingredients-details.module.css';
 import PropTypes from 'prop-types';
-import ProductsData from '../../utils/data';
 import { useSelector } from "react-redux";
 
 
 const IngredientsDetails = () => {
-    const ingredient = useSelector((store) => store.modal.ingredient);
+    const ingredient = useSelector((store) => store.burgerIngredientsReducer.selectedIngredient);
     return (
         <div className={style.ingredientDetails}>
             <div className={style.ingredientDetailsImage}>

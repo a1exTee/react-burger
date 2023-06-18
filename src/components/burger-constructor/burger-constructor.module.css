@@ -52,3 +52,22 @@
     display: flex;
     align-items: center;
 }
+
+.orderTotalPrice {
+    font-weight: 400;
+    font-size: 48px;
+    line-height: 36px;
+    color: #F2F2F3;
+}
+
+.orderWrap {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+}
+
+.element {
+    display: flex;
+    margin: 16px 0;
+    align-items: center;
+}
