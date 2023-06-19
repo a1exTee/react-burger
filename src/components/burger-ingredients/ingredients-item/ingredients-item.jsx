@@ -1,35 +1,31 @@
-import { Counter, CurrencyIcon, DragIcon } from '@ya.praktikum/react-developer-burger-ui-components';
+import { Counter, CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import style from './ingredients-item.module.css';
 import { useDrag } from "react-dnd";
 import { modalAddIngredient } from "../../../services/actions/burger-ingredients/burger-ingredients";
 import { toggleModalIngredient } from "../../../services/actions/modal/modal";
 import { useSelector, useDispatch } from "react-redux";
-import React, { useState, setState, useEffect, useMemo, useCallback } from 'react';
-import PropTypes from "prop-types";
+import {useMemo } from 'react';
+import { ingredientsPropTypes } from '../../../utils/prop-types';
 
   
 const IngredientsItem = ({ ingredient }) => {
-    const dispatch = useDispatch()
-    const {name, price, image, _id} = ingredient;
-    
-    const handleIngredientClick = () => {
-        dispatch(modalAddIngredient(ingredient));
-        dispatch(toggleModalIngredient(true));
-    }
+  const dispatch = useDispatch();
+  
+  const {name, price, image } = ingredient;
+  
+  const handleIngredientClick = () => {
+      dispatch(modalAddIngredient(ingredient));
+      dispatch(toggleModalIngredient(true));
+  }
 
-    const bun = useSelector(store => store.burgerConstructorReducer.bun);
-    const ingredients = useSelector(store => store.burgerConstructorReducer.ingredientsConstructor);
-    const allIngredientsConstructor = ingredients.concat(bun, bun);
+  const bun = useSelector(store => store.burgerConstructorReducer.bun);
+  const ingredients = useSelector(store => store.burgerConstructorReducer.ingredientsConstructor);
 
-    let count = 0;
+  const count = useMemo(() => {
+    const allIngredients = [bun, bun, ...ingredients];
+    return allIngredients.reduce((sum, item) => ingredient._id === item?._id ? sum + 1 : sum, 0);
+  }, [ingredients, bun, ingredient._id]);
 
-    const constructorIngredients = useMemo(() => {
-      return allIngredientsConstructor.map(item => {
-          if (item?._id === _id) {
-              (count += 1);
-          }
-      });
-    }, [allIngredientsConstructor]);
 
   const [{isDragging}, dragRef] = useDrag({
     type: 'ingredientDND',
@@ -64,7 +60,7 @@ const IngredientsItem = ({ ingredient }) => {
 }
 
 IngredientsItem.propTypes = {
-  ingredient: PropTypes.object.isRequired,
+  ingredient: ingredientsPropTypes,
 }
 
 export default IngredientsItem;

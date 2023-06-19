@@ -6,7 +6,7 @@ import {useMemo} from 'react';
 import OrderDetails from './order-details/order-details';
 import { useDrop } from "react-dnd";
 import { useDispatch, useSelector } from "react-redux";
-import {ADD_BUN_IN_CONSTRUCTOR, ADD_IN_CONSTRUCTOR, DEL_IN_CONSTRUCTOR, TOTAL_PRICE} from "../../services/actions/burger-constructor/burger-constructor";
+import {ADD_BUN_IN_CONSTRUCTOR, ADD_IN_CONSTRUCTOR } from "../../services/actions/burger-constructor/burger-constructor";
 import { sendOrder } from "../../services/actions/order/order";
 import { v4 as uuidv4 } from "uuid";
 import {toggleModalOrder} from '../../services/actions/modal/modal';
@@ -36,14 +36,11 @@ const BurgerConstructor = () => {
       })
   }
 
-  const [{isHover}, dropTarget] = useDrop({
+  const [, dropTarget] = useDrop({
     accept: 'ingredientDND',
     drop: (ingredient) => {
       dropHandler(JSON.parse(JSON.stringify(ingredient)))
     },
-    collect: monitor => ({
-      isHover: monitor.isOver()
-    })
   })
   
   const ingredientsId = ingredients?.map((ingredient) => ingredient?._id).concat(bunConstructor?._id)

@@ -1,5 +1,5 @@
-import React, { useState, setState, useEffect, useMemo, useCallback } from 'react';
-import { Tab, CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components';
+import { useState, useEffect, useMemo } from 'react';
+import { Tab  } from '@ya.praktikum/react-developer-burger-ui-components';
 import IngredientsItem from './ingredients-item/ingredients-item';
 import burgerIngredientsStyle from './burger-ingredients.module.css';
 import Modal from '../modal/modal';
@@ -19,6 +19,16 @@ const BurgerIngredients = () => {
     setCurrentTab(tab);
     document.querySelector(`#${tab}`)?.scrollIntoView({ behavior: "smooth" });
   }
+
+  const buns = useMemo(() => ingredients.filter(item => item.type === "bun"), [ingredients]);
+  const sauces = useMemo(
+    () => ingredients.filter((item) => item.type === "sauce"),
+    [ingredients]
+  );
+  const mains = useMemo(
+    () => ingredients.filter((item) => item.type === "main"),
+    [ingredients]
+  );
 
   const closeModal = () => {
     dispatch(toggleModalIngredient(false));
@@ -53,38 +63,38 @@ const BurgerIngredients = () => {
           Начинки
         </Tab>
       </div>
-      <div className={`${burgerIngredientsStyle.tabContent} pt-5 custom-scroll`}>
-        <div ref={bunRef}>
+      <ul className={`${burgerIngredientsStyle.tabContent} pt-5 custom-scroll`}>
+        <li ref={bunRef}>
           <h2 id='bun' className='pt-5'>Булки</h2>
           <ul className={`ml-4 mr-4 mt-6 mb-5`}>
-            {ingredients && ingredients.map((ingredient) => ingredient.type === 'bun' && 
+            {buns.map((ingredient) => 
               <li key={ingredient._id}>
-                <IngredientsItem key={ingredient._id} ingredient={ingredient} />
+                <IngredientsItem ingredient={ingredient} />
               </li>
             )}
           </ul>
-        </div>
-        <div ref={sauceRef}>
+        </li>
+        <li ref={sauceRef}>
           <h2 id='sauce' className='pt-5'>Соусы</h2>
           <ul className={`ml-4 mr-4 mt-6 mb-5`}>
-            {ingredients && ingredients.map((ingredient) => ingredient.type === 'sauce' && 
+            {sauces.map(ingredient =>
               <li key={ingredient._id}>
-                <IngredientsItem key={ingredient._id} ingredient={ingredient} />
+                <IngredientsItem ingredient={ingredient} />
               </li>
             )}
           </ul>
-        </div>
-        <div ref={mainRef}>
+        </li>
+        <li ref={mainRef}>
           <h2 id='main' className='pt-5'>Начинки</h2>
           <ul className={`ml-4 mr-4 mt-6 mb-5`}>
-            {ingredients && ingredients.map((ingredient) => ingredient.type === 'main' && 
+            {mains.map(ingredient =>
               <li key={ingredient._id}>
-                <IngredientsItem key={ingredient._id} ingredient={ingredient} />
+                <IngredientsItem ingredient={ingredient} />
               </li>
             )}
           </ul>
-        </div>
-      </div>
+        </li>
+      </ul>
     </section>
     {ingredientInModal && 
       <Modal closeModal={closeModal} title='Детали ингредиента'>

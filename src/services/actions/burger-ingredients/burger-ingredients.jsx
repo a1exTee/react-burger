@@ -1,6 +1,5 @@
 import { requestIngredients } from "../../../utils/data";
 import { apiUrl } from "../../../utils/data";
-import { RESET_CONSTRUCTOR } from "../burger-constructor/burger-constructor";
 
 export const INGREDIENTS_REQUEST = "INGREDIENTS_REQUEST";
 export const INGREDIENTS_SUCCESS = "INGREDIENTS_SUCCESS";

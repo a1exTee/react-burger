@@ -20,7 +20,7 @@ export const burgerIngredientsReducer = (state = initialState, action) => {
       };
     }
     case INGREDIENTS_ERROR: {
-      return { ...initialState, ingredientsChecker: true };
+      return { ...initialState, ingredientsChecker: true, ingredientsRequest: false };
     }
     case MODAL_ADD_INGREDIENT: {
       return {

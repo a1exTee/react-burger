@@ -1,4 +1,3 @@
-import { apiUrl } from "../../../utils/data";
 import { orderData } from "../../../utils/order-data";
 import { RESET_CONSTRUCTOR } from "../burger-constructor/burger-constructor";
 
