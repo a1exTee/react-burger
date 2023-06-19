@@ -23,15 +23,13 @@ const IngredientsItem = ({ ingredient }) => {
 
     let count = 0;
 
-    useMemo(() => {
-        allIngredientsConstructor.forEach(
-        (item) => {
+    const constructorIngredients = useMemo(() => {
+      return allIngredientsConstructor.map(item => {
           if (item?._id === _id) {
-              (count += 1)
+              (count += 1);
           }
-        }
-    )
-    }, [allIngredientsConstructor])
+      });
+    }, [allIngredientsConstructor]);
 
   const [{isDragging}, dragRef] = useDrag({
     type: 'ingredientDND',

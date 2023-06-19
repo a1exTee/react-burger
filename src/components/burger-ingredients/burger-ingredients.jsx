@@ -2,8 +2,6 @@ import React, { useState, setState, useEffect, useMemo, useCallback } from 'reac
 import { Tab, CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import IngredientsItem from './ingredients-item/ingredients-item';
 import burgerIngredientsStyle from './burger-ingredients.module.css';
-import PropTypes from "prop-types";
-import { dataPropTypes } from "../../utils/prop-types";
 import Modal from '../modal/modal';
 import IngredientsDetails from './ingredients-details/ingredients-details';
 import {modalDeleteIngredient} from '../../services/actions/burger-ingredients/burger-ingredients';
@@ -96,10 +94,6 @@ const BurgerIngredients = () => {
     </>
   )
 }
-
-BurgerIngredients.propTypes = {
-    data: PropTypes.arrayOf(PropTypes.shape(dataPropTypes).isRequired),
-};
 
 
 export default BurgerIngredients;
