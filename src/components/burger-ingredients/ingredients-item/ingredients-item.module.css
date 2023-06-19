@@ -5,3 +5,19 @@
     float: left;
     vertical-align: top;
 }
+
+.ingredientHeader {
+    font-style: normal;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 24px;
+    text-align: center;
+    color: #F2F2F3;
+}
+.ingredientPrice {
+    font-weight: 400;
+    font-size: 28px;
+    line-height: 24px;
+    text-align: center;
+    color: #F2F2F3;
+}

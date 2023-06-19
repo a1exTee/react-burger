@@ -5,8 +5,8 @@ import { orderReducer } from "./order/order";
 import { combineReducers } from "redux";
 
 export const rootReducer = combineReducers({
-  burgerConstructor: burgerConstructorReducer,
-  ingredients: burgerIngredientsReducer,
-  modal: modalReducer,
-  order: orderReducer,
+  burgerConstructorReducer,
+  burgerIngredientsReducer,
+  modalReducer,
+  orderReducer,
 });
