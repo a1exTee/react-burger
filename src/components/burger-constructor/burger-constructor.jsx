@@ -11,6 +11,8 @@ import { sendOrder } from "../../services/actions/order/order";
 import { v4 as uuidv4 } from "uuid";
 import {toggleModalOrder} from '../../services/actions/modal/modal';
 import BurgerConstructorItem from '../burger-constructor/burger-constructor-item';
+import { getCookie } from "../../utils/data";
+import { useNavigate } from 'react-router-dom';
 
 
 
@@ -20,6 +22,8 @@ const BurgerConstructor = () => {
   const ingredientInModal = useSelector(store =>  store.modalReducer.isModalOrder);
   const ingredients = useSelector(store => store.burgerConstructorReducer.ingredientsConstructor);
   const bunConstructor = useSelector(store => store.burgerConstructorReducer.bun);
+  const navigate = useNavigate();
+  const isAuthorized = useSelector((store) => store.authReducer.isAuthorized);
 
   const dropHandler = (ingredient) => {
     ingredient.id = uuidv4()
@@ -45,8 +49,12 @@ const BurgerConstructor = () => {
   
   const ingredientsId = ingredients?.map((ingredient) => ingredient?._id).concat(bunConstructor?._id)
   const createOrder = () => {
-    dispatch(sendOrder(ingredientsId));
-    dispatch(toggleModalOrder(true));
+    if (getCookie('accessToken') && isAuthorized) {
+      dispatch(sendOrder(ingredientsId));
+      dispatch(toggleModalOrder(true));
+    } else {
+      navigate('/login')
+    }
   }
 
   const closeModal = () => {
