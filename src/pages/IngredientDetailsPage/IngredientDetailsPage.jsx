@@ -5,8 +5,10 @@ import IngredientDetails from '../../components/burger-ingredients/ingredients-d
 
 export function IngredientDetailsPage() {
   const { id } = useParams();
-  const ingredients = useSelector(store => store.menu.items);
-  const ingredient = ingredients.find((item) => item._id === id);
+  const ingredient = useSelector((store) => store.burgerIngredientsReducer.selectedIngredient);
+  
+  console.log(useSelector((store) => store));
+  console.log(ingredient);
 
   return (
     <>

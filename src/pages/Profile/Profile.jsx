@@ -4,7 +4,7 @@ import { logout, patchUser } from '../../services/actions/auth/auth';
 import { Button, Input, PasswordInput } from '@ya.praktikum/react-developer-burger-ui-components';
 import { Link, Navigate, useMatch } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { menuClass } from '../../utils/data';
+import { setMenuClass } from '../../utils/data';
 import { useForm } from '../../components/form/Form';
 
 export function Profile() {
@@ -59,10 +59,10 @@ export function Profile() {
           <div className={profileStyles.menu}>
             <ul className={`text text_type_main-medium ${profileStyles.links}`}>
               <li className={`text_color_inactive ${profileStyles.link}`}>
-                <Link to='/profile' className={menuClass('text', profileLink)}>Профиль</Link>
+                <Link to='/profile' className={setMenuClass('text', profileLink)}>Профиль</Link>
               </li>
               <li className={`text_color_inactive ${profileStyles.link}`}>
-                <Link to='/profile/orders' className={menuClass('text', ordersLink)}>История заказов</Link>
+                <Link to='/profile/orders' className={setMenuClass('text', ordersLink)}>История заказов</Link>
               </li>
               <li className={`text_color_inactive ${profileStyles.link}`}><span onClick={onLogout}>Выход</span></li>
             </ul>

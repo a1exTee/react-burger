@@ -1,12 +1,13 @@
 export const apiUrl = `https://norma.nomoreparties.space/api/`;
 
-const response = (res) => {
-   return res.ok ? res.json() : res.json().then((err) => Promise.reject(err));
+
+export const checkResponse = (res) => {
+  return res.ok ? res.json() : res.json().then((err) => Promise.reject(err));
 };
  
 export const requestIngredients = async () => {
   const res = await fetch(`${apiUrl}ingredients`);
-  return response(res);
+  return checkResponse(res);
 }
 
 
@@ -24,7 +25,7 @@ export const tokenUrl = apiUrl + "auth/token";
 export const accessTokenLifetime = 1200;
 export const refreshTokenLifetime = 2400;
 
-export function menuClass(type, link) {
+export function setMenuClass(type, link) {
   switch (type) {
     case 'icon': {
       if (link) {
@@ -143,10 +144,6 @@ export function deleteCookie(name) {
   setCookie(name, null, { expires: -1 });
 }
 
-
-const checkResponse = (res) => {
-  return res.ok ? res.json() : res.json().then((err) => Promise.reject(err));
-};
 
 export const requestData = async (url, options) => {
   //console.log(fetch, options);

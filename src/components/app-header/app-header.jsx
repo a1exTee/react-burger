@@ -5,7 +5,7 @@ import { ListIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import { ProfileIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import style from './app-header.module.css';
 import { Link, NavLink, useMatch } from 'react-router-dom';
-import { menuClass } from '../../utils/data';
+import { setMenuClass } from '../../utils/data';
 
 const AppHeader = () => {
 
@@ -21,23 +21,23 @@ const AppHeader = () => {
                 <nav className={style.appHeaderNav}>
                     <NavLink to='/' className={style.appHeaderItem}>
                         <span className={`mr-4`}>
-                            <BurgerIcon type={menuClass('primary', rootLink)} />
+                            <BurgerIcon type={setMenuClass('primary', rootLink)} />
                         </span>
-                        <span className={`${menuClass('text', rootLink)}`}>Конструктор</span>
+                        <span className={`${setMenuClass('text', rootLink)}`}>Конструктор</span>
                     </NavLink>
                     <NavLink to='/orders-feed' className={style.appHeaderItem}>
                         <span className={`mr-4`}>
-                            <ListIcon type={menuClass('primary', ordersLink)}  />
+                            <ListIcon type={setMenuClass('primary', ordersLink)}  />
                         </span>
-                        <span className={`${menuClass('text', ordersLink)}`}>Лента заказов</span>
+                        <span className={`${setMenuClass('text', ordersLink)}`}>Лента заказов</span>
                     </NavLink>
                 </nav>
                 <Link className='logo' to='/'><Logo /></Link>
                 <NavLink to='/profile' className={style.appHeaderItem}>
                     <span className={`mr-4`}>
-                        <ProfileIcon type={menuClass('primary', profileLink || registerLink || loginLink || forgotPassLink || resetPassLink)} />
+                        <ProfileIcon type={setMenuClass('primary', profileLink || registerLink || loginLink || forgotPassLink || resetPassLink)} />
                     </span>
-                    <span className={`${menuClass('text', profileLink || registerLink || loginLink || forgotPassLink || resetPassLink)}`}>Личный кабинет</span>
+                    <span className={`${setMenuClass('text', profileLink || registerLink || loginLink || forgotPassLink || resetPassLink)}`}>Личный кабинет</span>
                 </NavLink>
             </header>;
 } 
