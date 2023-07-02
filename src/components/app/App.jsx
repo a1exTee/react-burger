@@ -12,7 +12,7 @@ import {Register} from "../../pages/Register/Register";
 import {ResetPassword} from "../../pages/ResetPassword/ResetPassword";
 import { BrowserRouter as Router, Routes, Route, useLocation, useNavigate } from 'react-router-dom';
 import React, { useEffect } from "react";
-import { useDispatch } from 'react-redux';
+import { useSelector, useDispatch } from "react-redux";
 import { getCookie } from "../../utils/data";
 import { getUser } from "../../services/actions/auth/auth";
 import ProtectedRoute from "../ProtectedRoute";
@@ -22,11 +22,18 @@ import { getIngredients } from "../../services/actions/burger-ingredients/burger
 import {modalDeleteIngredient} from '../../services/actions/burger-ingredients/burger-ingredients';
 import {toggleModalIngredient} from '../../services/actions/modal/modal';
 
+
 function App() {
 
   const dispatch = useDispatch();
   const location = useLocation();
+  const navigate = useNavigate();
   const background = location.state && location.state.background;
+  //const ingredientInModal = useSelector(store => store.modalReducer.isModalIngr);
+  const handleModalClose = () => {
+    // Возвращаемся к предыдущему пути при закрытии модалки
+    navigate(-1);
+  };
   
   useEffect(() => {
     if (getCookie('accessToken')) {
@@ -38,10 +45,6 @@ function App() {
     dispatch(getIngredients());
   }, [dispatch]);
 
-  const closeModal = () => {
-    dispatch(toggleModalIngredient(false));
-    dispatch(modalDeleteIngredient());
-  }
 
   return (
     <main className={style.App}>
@@ -59,7 +62,7 @@ function App() {
             <Route path="/*" element={<Page404 />} />
             <Route path="/" element={<HomePage />} />
             {background && (
-              <Route path="/ingredients/:id" element={<Modal><IngredientsDetails /></Modal>} />
+              <Route path="/ingredients/:id" element={<Modal closeModal={handleModalClose} title='Детали ингредиента'><IngredientsDetails /></Modal>} />
             )}
           </Routes>
         </ErrorBoundary>

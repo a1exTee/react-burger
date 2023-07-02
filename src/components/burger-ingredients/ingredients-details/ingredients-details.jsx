@@ -4,6 +4,7 @@ import { useSelector } from "react-redux";
 
 const IngredientsDetails = () => {
     const ingredient = useSelector((store) => store.burgerIngredientsReducer.selectedIngredient);
+
     return (
         <div className={style.ingredientDetails}>
             <div className={style.ingredientDetailsImage}>
