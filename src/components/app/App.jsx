@@ -15,26 +15,33 @@ import React, { useEffect } from "react";
 import { useDispatch } from 'react-redux';
 import { getCookie } from "../../utils/data";
 import { getUser } from "../../services/actions/auth/auth";
-//import { getMenu } from "../../services/actions/menu";
 import ProtectedRoute from "../ProtectedRoute";
-
+import Modal from '../modal/modal';
+import IngredientsDetails from '../burger-ingredients/ingredients-details/ingredients-details';
+import { getIngredients } from "../../services/actions/burger-ingredients/burger-ingredients";
+import {modalDeleteIngredient} from '../../services/actions/burger-ingredients/burger-ingredients';
+import {toggleModalIngredient} from '../../services/actions/modal/modal';
 
 function App() {
 
   const dispatch = useDispatch();
   const location = useLocation();
-  const state = location.state;
- 
-  const background = state?.background;
+  const background = location.state && location.state.background;
+  
   useEffect(() => {
     if (getCookie('accessToken')) {
       dispatch(getUser());
     }
   }, [dispatch]);
 
-  /*useEffect(() => {
-    dispatch(getMenu());
-  }, [dispatch]);*/
+  useEffect(() => {
+    dispatch(getIngredients());
+  }, [dispatch]);
+
+  const closeModal = () => {
+    dispatch(toggleModalIngredient(false));
+    dispatch(modalDeleteIngredient());
+  }
 
   return (
     <main className={style.App}>
@@ -51,6 +58,9 @@ function App() {
             <Route path="/ingredients/:id" element={<IngredientDetailsPage />} />
             <Route path="/*" element={<Page404 />} />
             <Route path="/" element={<HomePage />} />
+            {background && (
+              <Route path="/ingredients/:id" element={<Modal><IngredientsDetails /></Modal>} />
+            )}
           </Routes>
         </ErrorBoundary>
       </div>

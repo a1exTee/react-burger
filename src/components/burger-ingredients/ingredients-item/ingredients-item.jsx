@@ -44,7 +44,12 @@ const IngredientsItem = ({ ingredient }) => {
       className={`${style.ingredientItem} ${isDragging && style.drag}`} 
       onClick={handleIngredientClick}
     >
-      <Link to={`/ingredients/${ingredient._id}`} state={{ background: location }}>
+      <Link to={{
+            pathname: `/ingredients/${ingredient._id}`,
+            // This is the trick! This link sets
+            // the `background` in location state.
+            state: { background: location }
+          }}>
         <div className='pl-4 pr-4'>
           <img src={image} alt={name} />
         </div>
