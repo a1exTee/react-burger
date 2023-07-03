@@ -131,7 +131,7 @@ const BurgerConstructor = () => {
             type="primary" 
             size="medium" 
             onClick={createOrder}
-            disabled={ingredients === 0 ? true : false}
+            disabled={!bunConstructor?.price}
           >
             Оформить заказ
           </Button>
