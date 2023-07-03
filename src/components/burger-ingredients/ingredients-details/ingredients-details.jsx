@@ -1,9 +1,13 @@
 import style from './ingredients-details.module.css';
 import { useSelector } from "react-redux";
-
+import { useParams } from 'react-router-dom';
 
 const IngredientsDetails = () => {
-    const ingredient = useSelector((store) => store.burgerIngredientsReducer.selectedIngredient);
+    const { id } = useParams();
+
+    const ingredients = useSelector((store) => store.burgerIngredientsReducer.ingredients);
+    
+    const ingredient = ingredients.find((item) => item._id === id);
 
     return (
         <div className={style.ingredientDetails}>

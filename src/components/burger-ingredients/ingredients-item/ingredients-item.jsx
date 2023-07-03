@@ -1,8 +1,6 @@
 import { Counter, CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import style from './ingredients-item.module.css';
 import { useDrag } from "react-dnd";
-import { modalAddIngredient } from "../../../services/actions/burger-ingredients/burger-ingredients";
-import { toggleModalIngredient } from "../../../services/actions/modal/modal";
 import { useSelector, useDispatch } from "react-redux";
 import {useMemo } from 'react';
 import { ingredientsPropTypes } from '../../../utils/prop-types';
@@ -14,10 +12,10 @@ const IngredientsItem = ({ ingredient }) => {
   
   const {name, price, image } = ingredient;
   
-  const handleIngredientClick = () => {
+  /*const handleIngredientClick = () => {
       dispatch(modalAddIngredient(ingredient));
       dispatch(toggleModalIngredient(true));
-  }
+  }*/
 
   const bun = useSelector(store => store.burgerConstructorReducer.bun);
   const ingredients = useSelector(store => store.burgerConstructorReducer.ingredientsConstructor);
@@ -42,14 +40,10 @@ const IngredientsItem = ({ ingredient }) => {
     <div 
       ref={dragRef} 
       className={`${style.ingredientItem} ${isDragging && style.drag}`} 
-      onClick={handleIngredientClick}
     >
-      <Link to={{
-            pathname: `/ingredients/${ingredient._id}`,
-            // This is the trick! This link sets
-            // the `background` in location state.
-            state: { background: location }
-          }}>
+       <Link to={`/ingredients/${ingredient._id}`}
+          state={{ background: location }}
+        >
         <div className='pl-4 pr-4'>
           <img src={image} alt={name} />
         </div>

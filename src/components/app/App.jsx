@@ -12,15 +12,13 @@ import {Register} from "../../pages/Register/Register";
 import {ResetPassword} from "../../pages/ResetPassword/ResetPassword";
 import { BrowserRouter as Router, Routes, Route, useLocation, useNavigate } from 'react-router-dom';
 import React, { useEffect } from "react";
-import { useSelector, useDispatch } from "react-redux";
+import { useDispatch } from "react-redux";
 import { getCookie } from "../../utils/data";
 import { getUser } from "../../services/actions/auth/auth";
 import ProtectedRoute from "../ProtectedRoute";
 import Modal from '../modal/modal';
 import IngredientsDetails from '../burger-ingredients/ingredients-details/ingredients-details';
 import { getIngredients } from "../../services/actions/burger-ingredients/burger-ingredients";
-import {modalDeleteIngredient} from '../../services/actions/burger-ingredients/burger-ingredients';
-import {toggleModalIngredient} from '../../services/actions/modal/modal';
 
 
 function App() {
@@ -29,7 +27,6 @@ function App() {
   const location = useLocation();
   const navigate = useNavigate();
   const background = location.state && location.state.background;
-  //const ingredientInModal = useSelector(store => store.modalReducer.isModalIngr);
   const handleModalClose = () => {
     // Возвращаемся к предыдущему пути при закрытии модалки
     navigate(-1);
@@ -61,10 +58,12 @@ function App() {
             <Route path="/ingredients/:id" element={<IngredientDetailsPage />} />
             <Route path="/*" element={<Page404 />} />
             <Route path="/" element={<HomePage />} />
-            {background && (
-              <Route path="/ingredients/:id" element={<Modal closeModal={handleModalClose} title='Детали ингредиента'><IngredientsDetails /></Modal>} />
-            )}
           </Routes>
+          {background && (
+            <Routes>
+              <Route path="/ingredients/:id" element={<Modal closeModal={handleModalClose} title='Детали ингредиента'><IngredientsDetails /></Modal>} />
+            </Routes>
+          )}
         </ErrorBoundary>
       </div>
     </main>

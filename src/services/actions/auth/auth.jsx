@@ -82,8 +82,6 @@ export function login(data) {
         );
         dispatch({ type: STORE_USER, user: data.user });
         dispatch({ type: USER_AUTHORIZED, isAuthorized: true });
-        console.log(data);
-        console.log(dispatch());
       })
       .catch(() => dispatch({ type: LOGIN_FAIL }));
   }
