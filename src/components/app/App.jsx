@@ -12,7 +12,7 @@ import {Register} from "../../pages/Register/Register";
 import {ResetPassword} from "../../pages/ResetPassword/ResetPassword";
 import { BrowserRouter as Router, Routes, Route, useLocation, useNavigate } from 'react-router-dom';
 import React, { useEffect } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { getCookie } from "../../utils/data";
 import { getUser } from "../../services/actions/auth/auth";
 import ProtectedRoute from "../ProtectedRoute";
@@ -42,31 +42,49 @@ function App() {
     dispatch(getIngredients());
   }, [dispatch]);
 
+  const { ingredientsChecker, ingredientsRequest, ingredients } = useSelector(
+    (state) => state.burgerIngredientsReducer
+  );
+
+  if (ingredientsRequest) {
+    return <h2>Загрузка...</h2>;
+  }
+
+  if (!ingredientsRequest && ingredientsChecker) {
+    return <h2>Ошибка</h2>;
+  }
+
 
   return (
-    <main className={style.App}>
-      <div className="container">
-        <ErrorBoundary>
-          <AppHeader />
-          <Routes location={background || location}>
-            <Route path='/orders' element={<Page404 />} />
-            <Route path="/login" element={<Login />} />
-            <Route path="/register" element={<Register />} />
-            <Route path="/forgot-password" element={<ForgotPassword />} />
-            <Route path="/reset-password" element={<ResetPassword />} />
-            <Route path="/profile" element={<ProtectedRoute children={<Profile />} />} />
-            <Route path="/ingredients/:id" element={<IngredientDetailsPage />} />
-            <Route path="/*" element={<Page404 />} />
-            <Route path="/" element={<HomePage />} />
-          </Routes>
-          {background && (
-            <Routes>
-              <Route path="/ingredients/:id" element={<Modal closeModal={handleModalClose} title='Детали ингредиента'><IngredientsDetails /></Modal>} />
-            </Routes>
-          )}
-        </ErrorBoundary>
-      </div>
-    </main>
+    <>
+      {ingredientsRequest && <h2>Загрузка...</h2>}
+      {!ingredientsRequest && ingredientsChecker && <h2>Ошибка</h2>}
+      {!ingredientsRequest && !ingredientsChecker && ingredients.length && (
+        <main className={style.App}>
+          <div className="container">
+            <ErrorBoundary>
+              <AppHeader />
+              <Routes location={background || location}>
+                <Route path='/orders' element={<Page404 />} />
+                <Route path="/login" element={<Login />} />
+                <Route path="/register" element={<Register />} />
+                <Route path="/forgot-password" element={<ForgotPassword />} />
+                <Route path="/reset-password" element={<ResetPassword />} />
+                <Route path="/profile" element={<ProtectedRoute children={<Profile />} />} />
+                <Route path="/ingredients/:id" element={<IngredientDetailsPage />} />
+                <Route path="/*" element={<Page404 />} />
+                <Route path="/" element={<HomePage />} />
+              </Routes>
+              {background && (
+                <Routes>
+                  <Route path="/ingredients/:id" element={<Modal closeModal={handleModalClose} title='Детали ингредиента'><IngredientsDetails /></Modal>} />
+                </Routes>
+              )}
+            </ErrorBoundary>
+          </div>
+        </main>
+      )}
+    </>
   );
 }
 

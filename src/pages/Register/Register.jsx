@@ -4,7 +4,8 @@ import { registerProfile } from '../../services/actions/auth/auth';
 import { Input, PasswordInput } from '@ya.praktikum/react-developer-burger-ui-components';
 import { Link, Navigate, useLocation } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { useForm, Form } from '../../components/form/Form';
+import { Form } from '../../components/form/Form';
+import { useForm } from '../../hooks/useForm';
 
 export function Register() {
   const {values, handleChange } = useForm({ email: '', password: '', name: '' });

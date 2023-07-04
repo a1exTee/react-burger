@@ -5,7 +5,7 @@ import { Button, Input, PasswordInput } from '@ya.praktikum/react-developer-burg
 import { Link, Navigate, useMatch } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { setMenuClass } from '../../utils/data';
-import { useForm } from '../../components/form/Form';
+import { useForm } from '../../hooks/useForm';
 
 export function Profile() {
   const {isAuthorized, user, logoutRequest} = useSelector((store) => store.authReducer);

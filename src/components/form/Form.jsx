@@ -1,17 +1,7 @@
 import formStyles from './Form.module.css';
 import { Button } from '@ya.praktikum/react-developer-burger-ui-components';
 import PropTypes from 'prop-types';
-import { useState } from "react";
 
-export function useForm(inputValues) {
-  const [values, setValues] = useState(inputValues);
-
-  const handleChange = (event) => {
-    const {value, name} = event.target;
-    setValues({...values, [name]: value});
-  };
-  return {values, setValues, handleChange };
-};
 
 export function Form({ title, buttonText, onSubmit, children }) {
   return (

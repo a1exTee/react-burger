@@ -4,7 +4,8 @@ import { Link, Navigate, useLocation } from 'react-router-dom';
 import loginStyles from './Login.module.css';
 import { STORE_PASSWORD, login } from '../../services/actions/auth/auth';
 import { useDispatch, useSelector } from 'react-redux';
-import {Form, useForm} from '../../components/form/Form';
+import {Form} from '../../components/form/Form';
+import { useForm } from '../../hooks/useForm';
 
 export function Login() {
   const {values, handleChange } = useForm({ email: '', password: '' });

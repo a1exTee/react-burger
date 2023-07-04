@@ -1,9 +1,7 @@
-import { useSelector, useDispatch } from 'react-redux';
-import React, { useEffect } from "react";
+import { useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
 import styles from './IngredientDetailsPage.module.css';
 import IngredientDetails from '../../components/burger-ingredients/ingredients-details/ingredients-details';
-import { getIngredients } from "../../services/actions/burger-ingredients/burger-ingredients";
 
 
 export function IngredientDetailsPage() {
@@ -11,11 +9,6 @@ export function IngredientDetailsPage() {
   const { ingredientsChecker, ingredientsRequest, ingredients } = useSelector(
     (state) => state.burgerIngredientsReducer
   );
-  const dispatch = useDispatch();
-
-  useEffect(() => {
-    dispatch(getIngredients());
-  }, [dispatch]);
 
   if (ingredientsRequest) {
     return <h2>Загрузка...</h2>;
