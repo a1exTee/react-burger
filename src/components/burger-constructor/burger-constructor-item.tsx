@@ -5,6 +5,8 @@ import { useDrop, useDrag } from "react-dnd";
 import { DEL_IN_CONSTRUCTOR, REPLACE_INGREDIENT} from "../../services/actions/burger-constructor/burger-constructor";
 import { TIngredient } from '../../utils/prop-types';
 import { useAppDispatch } from '../../utils/prop-types';
+import type { Identifier } from 'dnd-core'
+import { type } from 'os';
 
 
 interface IConstructorIngredient {
@@ -12,9 +14,23 @@ interface IConstructorIngredient {
   ingredient: TIngredient;
 }
 
+type TDragObject = {
+  id: string;
+  index: number;
+  type: 'bun' | 'sauce' | 'main';
+}
+
+type TDragCollectedProps = {
+  isDragging: boolean;
+}
+
+type TDropgCollectedProps = {
+  handleId: Identifier;
+}
+
 const BurgerConstructorItem: FC<IConstructorIngredient> = ({index, ingredient}) => {
   const dispatch = useAppDispatch()
-  const ref = useRef<HTMLDivElement>(null)
+  const ref = useRef<HTMLLIElement>(null)
   const id = ingredient.id
 
   const [{isDragging}, drag] = useDrag({
@@ -27,7 +43,7 @@ const BurgerConstructorItem: FC<IConstructorIngredient> = ({index, ingredient}) 
     }
   })
 
-  const [, drop] = useDrop({
+  const [, drop] = useDrop<IConstructorIngredient, void, { isDragging: Identifier | null }>({
     accept: 'ingredient',
     hover(ingredients) {
       if (!ref.current) {return}
@@ -41,7 +57,7 @@ const BurgerConstructorItem: FC<IConstructorIngredient> = ({index, ingredient}) 
     }
   })
   
-  const deleteIngredient = (itemId: number) => {
+  const deleteIngredient = (itemId: string) => {
     dispatch({
       type: DEL_IN_CONSTRUCTOR,
       id: itemId,

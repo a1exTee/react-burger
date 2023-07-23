@@ -26,10 +26,11 @@ export const accessTokenLifetime = 1200;
 export const refreshTokenLifetime = 2400;
 
 export type TIconTypes = {
-  type: string | null;
+  type?: string;
+  link?: object;
 }
 
-export const setMenuClass: TIconTypes = (type: string, link: object | null) => {
+export const setMenuClass = (type: string, link: object): TIconTypes => {
   switch (type) {
     case 'icon': {
       if (link) {
@@ -46,7 +47,7 @@ export const setMenuClass: TIconTypes = (type: string, link: object | null) => {
       }
     }
     default: {
-      return null
+      return 'primary'
     }
   }
 }
