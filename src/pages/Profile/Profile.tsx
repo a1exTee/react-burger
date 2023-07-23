@@ -6,6 +6,7 @@ import { Link, Navigate, useMatch } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { setMenuClass } from '../../utils/data';
 import { useForm } from '../../hooks/useForm';
+import { useAppDispatch } from '../../utils/prop-types';
 
 export function Profile() {
     // @ts-ignore
@@ -22,7 +23,7 @@ export function Profile() {
 
   const profileLink = useMatch('/profile');
   const ordersLink = useMatch('/profile/orders');
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
 
   function saveChanges(e: React.ChangeEvent<HTMLFormElement>) {
     e.preventDefault();
@@ -72,13 +73,13 @@ export function Profile() {
             </p>
           </div>
           <div className={profileStyles.auth_fields}>
-            <Input name='name' placeholder='Имя' value={values.name} onChange={handleChange} />
-            <Input name='email' placeholder='Логин' value={values.email} onChange={handleChange} />
-            <PasswordInput name='password' value={values.password} onChange={handleChange} />
+            <Input name='name' placeholder='Имя' value={values.name || ''} onChange={handleChange} />
+            <Input name='email' placeholder='Логин' value={values.email || ''} onChange={handleChange} />
+            <PasswordInput name='password' value={values.password || ''} onChange={handleChange} />
             <div className={`${profileStyles.buttons} ${buttonClass}`}>
               <span onClick={resetChanges}
                 className={`text text_type_main-small ${profileStyles.link}`}>Отмена</span>
-              <Button htmlType='submit' size='medium' type='primary' onClick={saveChanges}>Сохранить</Button>
+              <Button htmlType='submit' size='medium' type='primary' onClick={() => saveChanges}>Сохранить</Button>
             </div>
           </div>
         </div>

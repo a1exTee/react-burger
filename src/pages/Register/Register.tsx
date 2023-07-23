@@ -6,11 +6,12 @@ import { Link, Navigate, useLocation } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { Form } from '../../components/form/Form';
 import { useForm } from '../../hooks/useForm';
+import { useAppDispatch } from '../../utils/prop-types';
 
 export function Register() {
   const {values, handleChange } = useForm({ email: '', password: '', name: '' });
   const location = useLocation();
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
 
   function onSubmit(e: React.ChangeEvent<HTMLFormElement>) {
     e.preventDefault();
@@ -39,7 +40,7 @@ export function Register() {
             <Form
               title={'Регистрация'}
               buttonText={'Зарегистрироваться'}
-              onSubmit={onSubmit}
+              onSubmit={() => onSubmit}
             >
               <Input name='name' type='text' placeholder='Имя' value={values.name || ''} onChange={handleChange} />
               <Input name='email' type='email' placeholder='E-mail' value={values.email || ''} onChange={handleChange} />

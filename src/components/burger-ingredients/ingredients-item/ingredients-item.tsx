@@ -2,12 +2,15 @@ import { Counter, CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-c
 import style from './ingredients-item.module.css';
 import { useDrag } from "react-dnd";
 import { useSelector, useDispatch } from "react-redux";
-import {useMemo } from 'react';
+import {useMemo, FC } from 'react';
 import { useLocation, Link } from "react-router-dom";
-
+import { TIngredient } from '../../../utils/prop-types';
+import { useAppDispatch } from '../../../utils/prop-types';
   
-const IngredientsItem = ({ ingredient }) => {
-  const dispatch = useDispatch();
+const IngredientsItem : FC<{ ingredient: TIngredient }> = ({
+  ingredient,
+}) =>  {
+  const dispatch = useAppDispatch();
   
   const {name, price, image } = ingredient;
   

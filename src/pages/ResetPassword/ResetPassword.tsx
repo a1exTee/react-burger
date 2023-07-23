@@ -5,11 +5,13 @@ import { Link, Navigate, useLocation } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { Form } from '../../components/form/Form';
 import { useForm } from '../../hooks/useForm';
+import { FC, FormEvent } from "react";
+import { useAppDispatch } from '../../utils/prop-types';
 
-export function ResetPassword() {
+export const ResetPassword: FC = () => {
   const {values, handleChange } = useForm({ password: '', token: '' });
   const location = useLocation();
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
 
   function onSubmit(e: React.ChangeEvent<HTMLFormElement>) {
     e.preventDefault();
@@ -40,10 +42,10 @@ export function ResetPassword() {
             <Form
               title={'Восстановление пароля'}
               buttonText={'Сохранить'}
-              onSubmit={onSubmit}
+              onSubmit={() => onSubmit}
             >
-              <PasswordInput name='password' placeholder='Введите новый пароль' value={values.password} onChange={handleChange} />
-              <Input name='token' type='text' placeholder='Введите код из письма' value={values.token} onChange={handleChange} />
+              <PasswordInput name='password' placeholder='Введите новый пароль' value={values.password || ''} onChange={handleChange} />
+              <Input name='token' type='text' placeholder='Введите код из письма' value={values.token || ''} onChange={handleChange} />
             </Form>
             <div className={`text text_type_main-default ${resetPasswordStyles.tips}`}>
               <p>Вспомнили пароль? <Link className={resetPasswordStyles.link} to='/login'>Войти</Link></p>

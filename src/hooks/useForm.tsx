@@ -5,6 +5,7 @@ export type TFormValues = {
   email: string;
   password?: string;
   code?: string;
+  token?: string;
 };
 
 export function useForm(
@@ -13,6 +14,7 @@ export function useForm(
     email: "",
     password: "",
     code: "",
+    token: ''
   }) {
     const [values, setValues] = useState<TFormValues>(inputValues);
 

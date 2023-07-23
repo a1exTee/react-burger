@@ -9,6 +9,7 @@ import {toggleModalIngredient} from '../../services/actions/modal/modal';
 import { useInView } from "react-intersection-observer";
 import { useSelector, useDispatch } from "react-redux";
 import { TIngredient } from '../../utils/prop-types';
+import { useAppDispatch } from '../../utils/prop-types';
 
 const BurgerIngredients = () => {
   const [currentTab, setCurrentTab] = useState('bun');
@@ -16,7 +17,7 @@ const BurgerIngredients = () => {
   const ingredients = useSelector(store => store.burgerIngredientsReducer.ingredients);
     // @ts-ignore
   const ingredientInModal = useSelector(store => store.modalReducer.isModalIngr);
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
 
   const handleTabClick = (tab) => {
     setCurrentTab(tab);
