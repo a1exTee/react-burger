@@ -1,14 +1,20 @@
 import { ConstructorElement, DragIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import burgerConstructorStyle from './burger-constructor.module.css';
-import { useRef } from 'react';
+import { useRef, FC } from 'react';
 import { useDrop, useDrag } from "react-dnd";
-import { useDispatch } from "react-redux";
 import { DEL_IN_CONSTRUCTOR, REPLACE_INGREDIENT} from "../../services/actions/burger-constructor/burger-constructor";
+import { TIngredient } from '../../utils/prop-types';
+import { useAppDispatch } from '../../utils/prop-types';
 
 
-const BurgerConstructorItem = ({index, ingredient}) => {
-  const dispatch = useDispatch()
-  const ref = useRef(null)
+interface IConstructorIngredient {
+  index: number;
+  ingredient: TIngredient;
+}
+
+const BurgerConstructorItem: FC<IConstructorIngredient> = ({index, ingredient}) => {
+  const dispatch = useAppDispatch()
+  const ref = useRef<HTMLDivElement>(null)
   const id = ingredient.id
 
   const [{isDragging}, drag] = useDrag({
@@ -25,8 +31,8 @@ const BurgerConstructorItem = ({index, ingredient}) => {
     accept: 'ingredient',
     hover(ingredients) {
       if (!ref.current) {return}
-      const dragIndex = ingredients.index
-      const hoverIndex = index
+      const dragIndex = ingredients.index;
+      const hoverIndex = index;
       dispatch({
         type: REPLACE_INGREDIENT,
         item: {dragIndex, hoverIndex}
@@ -35,7 +41,7 @@ const BurgerConstructorItem = ({index, ingredient}) => {
     }
   })
   
-  const deleteIngredient = (itemId) => {
+  const deleteIngredient = (itemId: number) => {
     dispatch({
       type: DEL_IN_CONSTRUCTOR,
       id: itemId,
@@ -47,7 +53,7 @@ const BurgerConstructorItem = ({index, ingredient}) => {
   return (
     <li ref={ref} key={ingredient.id} className={`${burgerConstructorStyle.element} ${isDragging ? burgerConstructorStyle.opacity : ''} pl-4 pr-4`}>
         <div className={burgerConstructorStyle.drag_icon}>
-          <DragIcon />
+          <DragIcon type="primary" />
         </div>
         <ConstructorElement
           text={ingredient.name}

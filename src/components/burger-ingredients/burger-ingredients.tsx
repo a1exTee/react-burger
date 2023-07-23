@@ -10,8 +10,13 @@ import { useInView } from "react-intersection-observer";
 import { useSelector, useDispatch } from "react-redux";
 import { TIngredient } from '../../utils/prop-types';
 import { useAppDispatch } from '../../utils/prop-types';
+import { FC, MutableRefObject } from 'react';
 
-const BurgerIngredients = () => {
+type CounterType = {
+  [key: string]: number
+}
+
+const BurgerIngredients: FC = () => {
   const [currentTab, setCurrentTab] = useState('bun');
     // @ts-ignore
   const ingredients = useSelector(store => store.burgerIngredientsReducer.ingredients);
@@ -19,18 +24,18 @@ const BurgerIngredients = () => {
   const ingredientInModal = useSelector(store => store.modalReducer.isModalIngr);
   const dispatch = useAppDispatch();
 
-  const handleTabClick = (tab) => {
+  const handleTabClick = (tab: string) => {
     setCurrentTab(tab);
     document.querySelector(`#${tab}`)?.scrollIntoView({ behavior: "smooth" });
   }
 
-  const buns = useMemo(() => ingredients.filter(item => item.type === "bun"), [ingredients]);
+  const buns = useMemo(() => ingredients?.filter((item: TIngredient) => item.type === "bun"), [ingredients]);
   const sauces = useMemo(
-    () => ingredients.filter((item) => item.type === "sauce"),
+    () => ingredients?.filter((item: TIngredient) => item.type === "sauce"),
     [ingredients]
   );
   const mains = useMemo(
-    () => ingredients.filter((item) => item.type === "main"),
+    () => ingredients?.filter((item: TIngredient) => item.type === "main"),
     [ingredients]
   );
 
@@ -71,7 +76,7 @@ const BurgerIngredients = () => {
         <li ref={bunRef}>
           <h2 id='bun' className='pt-5'>Булки</h2>
           <ul className={`ml-4 mr-4 mt-6 mb-5`}>
-            {buns.map((ingredient) => 
+            {buns.map((ingredient: TIngredient) => 
               <li key={ingredient._id}>
                 <IngredientsItem ingredient={ingredient} />
               </li>
@@ -81,7 +86,7 @@ const BurgerIngredients = () => {
         <li ref={sauceRef}>
           <h2 id='sauce' className='pt-5'>Соусы</h2>
           <ul className={`ml-4 mr-4 mt-6 mb-5`}>
-            {sauces.map(ingredient =>
+            {sauces.map((ingredient: TIngredient) =>
               <li key={ingredient._id}>
                 <IngredientsItem ingredient={ingredient} />
               </li>
@@ -91,7 +96,7 @@ const BurgerIngredients = () => {
         <li ref={mainRef}>
           <h2 id='main' className='pt-5'>Начинки</h2>
           <ul className={`ml-4 mr-4 mt-6 mb-5`}>
-            {mains.map(ingredient =>
+            {mains.map((ingredient: TIngredient) =>
               <li key={ingredient._id}>
                 <IngredientsItem ingredient={ingredient} />
               </li>

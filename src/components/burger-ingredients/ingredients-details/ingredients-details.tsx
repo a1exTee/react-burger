@@ -4,7 +4,7 @@ import { useParams } from 'react-router-dom';
 import React, { FC } from 'react';
 import { TIngredient } from '../../../utils/prop-types';
 
-const IngredientsDetails : FC<{ item: TIngredient }> = () => {
+const IngredientsDetails: FC = () => {
     const { id } = useParams();
 
     // @ts-ignore

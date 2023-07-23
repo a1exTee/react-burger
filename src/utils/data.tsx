@@ -25,7 +25,11 @@ export const tokenUrl = apiUrl + "auth/token";
 export const accessTokenLifetime = 1200;
 export const refreshTokenLifetime = 2400;
 
-export function setMenuClass(type: string, link: string) {
+export type TIconTypes = {
+  type: string | null;
+}
+
+export const setMenuClass: TIconTypes = (type: string, link: object | null) => {
   switch (type) {
     case 'icon': {
       if (link) {

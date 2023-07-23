@@ -3,8 +3,6 @@ import { useParams } from 'react-router-dom';
 import styles from './IngredientDetailsPage.module.css';
 import IngredientDetails from '../../components/burger-ingredients/ingredients-details/ingredients-details';
 import { FC } from "react";
-import { TIngredient } from '../../utils/prop-types';
-import { useAppDispatch } from '../../utils/prop-types';
 
 
 export const IngredientDetailsPage: FC = () => {
@@ -28,7 +26,7 @@ export const IngredientDetailsPage: FC = () => {
           <div className={`${styles.container} pt-10 pr-10 pb-15 pl-10`} >
             <div className={`${styles.text} text text_type_main-large`} >
               Детали ингредиента
-              <IngredientDetails ingredient={ingredients.find((item: TIngredient) => item._id === id)} />
+              <IngredientDetails />
             </div>
           </div>
         )}

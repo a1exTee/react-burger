@@ -19,11 +19,12 @@ import ProtectedRoute from "../ProtectedRoute";
 import Modal from '../modal/modal';
 import IngredientsDetails from '../burger-ingredients/ingredients-details/ingredients-details';
 import { getIngredients } from "../../services/actions/burger-ingredients/burger-ingredients";
+import { useAppDispatch } from '../../utils/prop-types';
 
 
 export const App: FC = () => {
 
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
   const location = useLocation();
   const navigate = useNavigate();
   const background = location.state && location.state.background;

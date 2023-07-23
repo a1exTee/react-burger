@@ -1,7 +1,14 @@
 import { useSelector } from 'react-redux';
 import { useLocation, Navigate } from 'react-router-dom';
+import { ReactElement } from 'react';
 
-export default function ProtectedRoute({ children, anonymous = false }) {
+type TProtectedRouteElement = {
+  children: ReactElement,
+  anonymous?: boolean
+}
+
+export default function ProtectedRoute({ children, anonymous = false }: TProtectedRouteElement) {
+  // @ts-ignore
   const isAuthorized = useSelector((store) => store.authReducer.isAuthorized);
 
   const location = useLocation();

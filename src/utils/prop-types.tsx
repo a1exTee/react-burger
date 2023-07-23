@@ -69,7 +69,7 @@ export type TGetNumberOrderSuccess = {
 
 export type TGetNumberOrderFailed = {
   readonly type: typeof ORDER_ERROR;
-  error: string;
+  error?: string;
 };
 
 export type TIngredient = {
@@ -160,7 +160,7 @@ export type TModal = {
 }
 
 export type TOverlay = {
-  children: ReactElement,
+  children?: ReactElement,
   onClick: () => void,
 }
 
