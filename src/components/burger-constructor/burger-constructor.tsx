@@ -13,12 +13,13 @@ import {toggleModalOrder} from '../../services/actions/modal/modal';
 import BurgerConstructorItem from '../burger-constructor/burger-constructor-item';
 import { getCookie } from "../../utils/data";
 import { useNavigate } from 'react-router-dom';
-
+import { TIngredient } from '../../utils/prop-types';
+import { useAppDispatch } from '../../utils/prop-types';
 
 
 const BurgerConstructor = () => {
 
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
   // @ts-ignore
   const ingredientInModal = useSelector(store =>  store.modalReducer.isModalOrder);
     // @ts-ignore
@@ -29,7 +30,7 @@ const BurgerConstructor = () => {
     // @ts-ignore
   const isAuthorized = useSelector((store) => store.authReducer.isAuthorized);
 
-  const dropHandler = (ingredient) => {
+  const dropHandler = (ingredient: TIngredient) => {
     ingredient.id = uuidv4()
     ingredient.type === 'bun' 
       ?
@@ -51,7 +52,7 @@ const BurgerConstructor = () => {
     },
   })
   
-  const ingredientsId = ingredients?.map((ingredient) => ingredient?._id).concat(bunConstructor?._id)
+  const ingredientsId = ingredients?.map((ingredient: TIngredient) => ingredient?._id).concat(bunConstructor?._id)
   const createOrder = () => {
     if (getCookie('accessToken') && isAuthorized) {
       dispatch(sendOrder(ingredientsId));
@@ -66,7 +67,7 @@ const BurgerConstructor = () => {
   }
 
   const orderTotalPrice = useMemo(() => {
-    const ingredientsPrice = ingredients?.reduce((prev, ingr) => {
+    const ingredientsPrice = ingredients?.reduce((prev: number, ingr: TIngredient) => {
       return prev + ingr.price;
     }, 0);
     return ingredientsPrice + (bunConstructor ? bunConstructor.price * 2 : 0)
@@ -100,7 +101,7 @@ const BurgerConstructor = () => {
               <p>Перетащите ингредиенты</p>
             </div>
             :
-            ingredients.map((ingredient, index) => (
+            ingredients.map((ingredient: TIngredient, index: number) => (
               <BurgerConstructorItem key={ingredient.id} ingredient={ingredient} index={index} />
             )
           )}
@@ -128,7 +129,7 @@ const BurgerConstructor = () => {
             {orderTotalPrice &&
               <span className='mr-8'>{orderTotalPrice}</span>
             }
-            <CurrencyIcon />  
+            <CurrencyIcon type="primary" />  
           </div>
           <Button 
             htmlType="button" 

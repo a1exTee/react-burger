@@ -156,7 +156,7 @@ export enum Category {
 export type TModal = {
   children: ReactElement,
   closeModal: () => void,
-  title: string
+  title?: string
 }
 
 export type TOverlay = {

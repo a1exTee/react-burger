@@ -2,7 +2,7 @@ import { useState, ChangeEvent } from "react";
 
 export type TFormValues = {
   name?: string;
-  email: string;
+  email?: string;
   password?: string;
   code?: string;
   token?: string;
