@@ -1,3 +1,36 @@
+import { TIconProps } from "@ya.praktikum/react-developer-burger-ui-components/dist/ui/icons/utils";
+
+export type TIconTypes = TIconProps["type"];
+
+export const setIconType = (type: string, link: boolean): TIconTypes => {
+  switch (type) {
+    case "icon": {
+      if (link) {
+        return "primary";
+      } else {
+        return "secondary";
+      }
+    }
+    default:
+      return "primary";
+  }
+};
+
+export const setMenuClass = (type: string, link: boolean): string => {
+  switch (type) {
+    case "text": {
+      if (link) {
+        return "text_color_primary";
+      } else {
+        return "text_color_inactive";
+      }
+    }
+    default: {
+      return "text_color_primary";
+    }
+  }
+};
+
 export const apiUrl = `https://norma.nomoreparties.space/api/`;
 
 type TCheckResponse = (res: Response) => any;
@@ -25,9 +58,9 @@ export const tokenUrl = apiUrl + "auth/token";
 export const accessTokenLifetime = 1200;
 export const refreshTokenLifetime = 2400;
 
-export type TIconTypes = {
-  type?: string;
-  link?: object;
+/*export type TIconTypes = {
+  type: string;
+  link: object;
 }
 
 export const setMenuClass = (type: string, link: object): TIconTypes => {
@@ -50,7 +83,7 @@ export const setMenuClass = (type: string, link: object): TIconTypes => {
       return 'primary'
     }
   }
-}
+}*/
 
 export type TOptions = {
   method: string;

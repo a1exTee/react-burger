@@ -5,7 +5,7 @@ import { ListIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import { ProfileIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import style from './app-header.module.css';
 import { Link, NavLink, useMatch } from 'react-router-dom';
-import { setMenuClass } from '../../utils/data';
+import { setMenuClass, setIconType } from '../../utils/data';
 
 const AppHeader = () => {
 
@@ -21,23 +21,23 @@ const AppHeader = () => {
                 <nav className={style.appHeaderNav}>
                     <NavLink to='/' className={style.appHeaderItem}>
                         <span className={`mr-4`}>
-                            <BurgerIcon type={setMenuClass('primary', rootLink)} />
+                            <BurgerIcon type={setIconType('primary', !!rootLink)} />
                         </span>
-                        <span className={`${setMenuClass('text', rootLink)}`}>Конструктор</span>
+                        <span className={`${setMenuClass('text', !!rootLink)}`}>Конструктор</span>
                     </NavLink>
                     <NavLink to='/orders-feed' className={style.appHeaderItem}>
                         <span className={`mr-4`}>
-                            <ListIcon type={setMenuClass('primary', ordersLink)}  />
+                            <ListIcon type={setIconType('primary', !!ordersLink)}  />
                         </span>
-                        <span className={`${setMenuClass('text', ordersLink)}`}>Лента заказов</span>
+                        <span className={`${setMenuClass('text', !!ordersLink)}`}>Лента заказов</span>
                     </NavLink>
                 </nav>
                 <Link className='logo' to='/'><Logo /></Link>
                 <NavLink to='/profile' className={style.appHeaderItem}>
                     <span className={`mr-4`}>
-                        <ProfileIcon type={setMenuClass('primary', profileLink || registerLink || loginLink || forgotPassLink || resetPassLink)} />
+                        <ProfileIcon type={setIconType('primary', !!profileLink || !!registerLink || !!loginLink || !!forgotPassLink || !!resetPassLink)} />
                     </span>
-                    <span className={`${setMenuClass('text', profileLink || registerLink || loginLink || forgotPassLink || resetPassLink)}`}>Личный кабинет</span>
+                    <span className={`${setMenuClass('text', !!profileLink || !!registerLink || !!loginLink || !!forgotPassLink || !!resetPassLink)}`}>Личный кабинет</span>
                 </NavLink>
             </header>;
 } 

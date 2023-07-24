@@ -52,7 +52,7 @@ const BurgerConstructor = () => {
     },
   })
   
-  const ingredientsId = ingredients?.map((ingredient: TIngredient) => ingredient?._id).concat(bunConstructor?._id)
+  const ingredientsId = ingredients.map((ingredient: TIngredient) => ingredient._id).concat(bunConstructor._id)
   const createOrder = () => {
     if (getCookie('accessToken') && isAuthorized) {
       dispatch(sendOrder(ingredientsId));
@@ -67,18 +67,16 @@ const BurgerConstructor = () => {
   }
 
   const orderTotalPrice = useMemo(() => {
-    const ingredientsPrice = ingredients?.reduce((prev: number, ingr: TIngredient) => {
+    const ingredientsPrice = ingredients.reduce((prev: number, ingr: TIngredient) => {
       return prev + ingr.price;
     }, 0);
-    return ingredientsPrice + (bunConstructor ? bunConstructor.price * 2 : 0)
+    return ingredientsPrice + (bunConstructor.price > 0 ? bunConstructor.price * 2 : 0)
   }, [bunConstructor, ingredients]);
-
-
 
      return (
       <div className={`${burgerConstructorStyle.burgerConstructorCol} custom-scroll`}>
         <ul ref={dropTarget}>
-          {!bunConstructor 
+          {Array.isArray(bunConstructor)
             ? 
             <div>
               <p>Перетащите булку</p>
@@ -86,9 +84,9 @@ const BurgerConstructor = () => {
             :
             <li className={`${burgerConstructorStyle.ingredient} pl-8 pr-4`}>
               <ConstructorElement
-                text={`${bunConstructor?.name} (верх)`}
-                thumbnail={bunConstructor?.image_mobile}
-                price={bunConstructor?.price}
+                text={`${bunConstructor.name} (верх)`}
+                thumbnail={bunConstructor.image_mobile}
+                price={bunConstructor.price}
                 type="top"
                 isLocked={true}
               />
@@ -106,7 +104,7 @@ const BurgerConstructor = () => {
             )
           )}
           </ul>
-          {!bunConstructor 
+          {Array.isArray(bunConstructor)
             ? 
             <div>
               <p>Перетащите булку</p>
@@ -114,9 +112,9 @@ const BurgerConstructor = () => {
             :               
             <li key={bunConstructor.id} className={`${burgerConstructorStyle.element} pl-8 pr-4`}>
               <ConstructorElement
-                text={`${bunConstructor?.name} (низ)`}
-                thumbnail={bunConstructor?.image_mobile}
-                price={bunConstructor?.price}
+                text={`${bunConstructor.name} (низ)`}
+                thumbnail={bunConstructor.image_mobile}
+                price={bunConstructor.price}
                 type="bottom"
                 isLocked={true}
               />
@@ -136,7 +134,7 @@ const BurgerConstructor = () => {
             type="primary" 
             size="medium" 
             onClick={createOrder}
-            disabled={!bunConstructor?.price}
+            disabled={!bunConstructor.price}
           >
             Оформить заказ
           </Button>

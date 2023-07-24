@@ -61,12 +61,12 @@ export function Profile() {
           <div className={profileStyles.menu}>
             <ul className={`text text_type_main-medium ${profileStyles.links}`}>
               <li className={`text_color_inactive ${profileStyles.link}`}>
-                <Link to='/profile' className={setMenuClass('text', profileLink)}>Профиль</Link>
+                <Link to='/profile' className={setMenuClass('text', !!profileLink)}>Профиль</Link>
               </li>
               <li className={`text_color_inactive ${profileStyles.link}`}>
-                <Link to='/profile/orders' className={setMenuClass('text', ordersLink)}>История заказов</Link>
+                <Link to='/profile/orders' className={setMenuClass('text', !!ordersLink)}>История заказов</Link>
               </li>
-              <li className={`text_color_inactive ${profileStyles.link}`}><span onClick={onLogout}>Выход</span></li>
+              <li className={`text_color_inactive ${profileStyles.link}`}><span onClick={() => onLogout}>Выход</span></li>
             </ul>
             <p className='text text_type_main-small text_color_inactive'>В этом разделе вы можете
               изменить свои персональные данные
