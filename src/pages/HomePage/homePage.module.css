@@ -1,0 +1,4 @@
+.appContent {
+    display: flex;
+    justify-content: space-between;
+}

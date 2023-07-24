@@ -3,10 +3,12 @@ import { burgerIngredientsReducer } from "./burger-ingredients/burger-ingredient
 import { modalReducer } from "./modal/modal";
 import { orderReducer } from "./order/order";
 import { combineReducers } from "redux";
+import { authReducer } from "./auth/auth";
 
 export const rootReducer = combineReducers({
   burgerConstructorReducer,
   burgerIngredientsReducer,
   modalReducer,
   orderReducer,
+  authReducer
 });
