@@ -34,7 +34,10 @@ import {
 
 export type TUserState = {
   isAuthorized: boolean,
-  user: object,
+  user: {
+    email: string,
+    name: string,
+  },
   password: null | undefined | string,
   getUserRequest: boolean,
   getUserSuccess: boolean,
@@ -63,7 +66,10 @@ export type TUserState = {
 
 const initialState: TUserState = {
   isAuthorized: false,
-  user: {},
+  user: {
+    email: '',
+    name: '',
+  },
   password: null,
   getUserRequest: false,
   getUserSuccess: false,
@@ -114,7 +120,10 @@ export const authReducer = (state = initialState, action: TUserActions | TRegist
     case CLEAR_USER: {
       return {
         ...state,
-        user: {}
+        user: {
+          email: '',
+          name: '',
+        }
       }
     }
     case PATCH_USER_REQUEST: {

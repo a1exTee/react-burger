@@ -3,14 +3,13 @@ import profileStyles from './Profile.module.css';
 import { logout, patchUser } from '../../services/actions/auth/auth';
 import { Button, Input, PasswordInput } from '@ya.praktikum/react-developer-burger-ui-components';
 import { Link, Navigate, useMatch } from 'react-router-dom';
-import { useDispatch, useSelector } from 'react-redux';
 import { setMenuClass } from '../../utils/data';
 import { useForm } from '../../hooks/useForm';
-import { useAppDispatch } from '../../utils/prop-types';
+import { useAppDispatch, useAppSelector } from '../../utils/prop-types';
 
 export function Profile() {
-    // @ts-ignore
-  const {isAuthorized, user, logoutRequest} = useSelector((store) => store.authReducer);
+   
+  const {isAuthorized, user, logoutRequest} = useAppSelector((store) => store.authReducer);
   const {values, setValues, handleChange } = useForm({ name: user.name, email: user.email, password: '' });
 
   const isProfileChanged = useMemo(() => user.email !== values.email

@@ -2,32 +2,11 @@ import React from 'react';
 import ReactDOM from 'react-dom/client';
 import './index.css';
 import './fonts/fonts.css';
-//import '@ya.praktikum/react-developer-burger-ui-components/dist/ui/fonts/fonts.css';
-//import "./node_modules/@ya.praktikum/react-developer-burger-ui-components/dist/ui/fonts/fonts.css"; 
 import App from './components/app/App';
 import reportWebVitals from './reportWebVitals';
-import { rootReducer } from "./services/reducers/index";
-import {compose, legacy_createStore as createStore, applyMiddleware} from "redux";
 import { Provider } from "react-redux";
-import thunk from "redux-thunk";
 import { BrowserRouter as Router } from 'react-router-dom';
-
-export type AppDispatch = typeof store.dispatch; 
-
-declare global {
-  interface Window {
-    __REDUX_DEVTOOLS_EXTENSION_COMPOSE__: any;
-  }
-}
-
-const composeEnhancers =
-  typeof window === "object" && window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__
-    ? window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__({})
-    : compose;
-
-const enhancer = composeEnhancers(applyMiddleware(thunk));
-export const store = createStore(rootReducer, enhancer);
-
+import { store } from './services/store';
 
 
 const root = ReactDOM.createRoot(

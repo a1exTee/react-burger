@@ -5,19 +5,19 @@ import { TIngrediensConstructorActions } from "../../actions/burger-constructor/
 
 type TBurgerConstructorReducer = {
   ingredientsConstructor: Array<TIngredient> | [],
-  bun: Array<TIngredient> | []
+  bun?: TIngredient | null
 }
 
   const initialState: TBurgerConstructorReducer = {
     ingredientsConstructor: [],
-    bun: [],
+    bun: null,
   };
   
-  export const burgerConstructorReducer = (state = initialState, action: TIngrediensConstructorActions) => {
-    switch (action.type) {
+  export const burgerConstructorReducer = (state = initialState, action: TIngrediensConstructorActions): TBurgerConstructorReducer => {
+    switch (action.type) { 
       case ADD_IN_CONSTRUCTOR: {
         return {
-          ...state,
+          ...state, 
           ingredientsConstructor: [...state.ingredientsConstructor, action.ingredientsConstructor],
         };
       }
@@ -34,9 +34,8 @@ type TBurgerConstructorReducer = {
         }
       }
       case RESET_CONSTRUCTOR:
-        return {
-          ingredientsConstructor: [],
-        }
+        return initialState
+
       case REPLACE_INGREDIENT: {
         const items = [...state.ingredientsConstructor]
           items.splice(action.item.dragIndex, 0)

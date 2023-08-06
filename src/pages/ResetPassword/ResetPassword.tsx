@@ -2,11 +2,10 @@ import resetPasswordStyles from './ResetPassword.module.css';
 import { resetPassword } from '../../services/actions/auth/auth';
 import { Input, PasswordInput } from '@ya.praktikum/react-developer-burger-ui-components';
 import { Link, Navigate, useLocation } from 'react-router-dom';
-import { useDispatch, useSelector } from 'react-redux';
 import { Form } from '../../components/form/Form';
 import { useForm } from '../../hooks/useForm';
-import { FC, FormEvent } from "react";
-import { useAppDispatch } from '../../utils/prop-types';
+import { FC } from "react";
+import { useAppDispatch, useAppSelector } from '../../utils/prop-types';
 
 export const ResetPassword: FC = () => {
   const {values, handleChange } = useForm({ password: '', token: '' });
@@ -18,12 +17,12 @@ export const ResetPassword: FC = () => {
     dispatch(resetPassword(values));
   };
 
-    // @ts-ignore
-  const resetSuccess = useSelector((store) => store.resetSuccess);
-    // @ts-ignore
-  const restoreSuccess = useSelector((store) => store.restoreSuccess);
-    // @ts-ignore
-  const isAuthorized = useSelector((store) => store.authReducer.isAuthorized);
+   
+  const resetSuccess = useAppSelector((store) => store.authReducer.resetSuccess);
+   
+  const restoreSuccess = useAppSelector((store) => store.authReducer.restoreSuccess);
+
+  const isAuthorized = useAppSelector((store) => store.authReducer.isAuthorized);
 
   if (resetSuccess) {
     return <Navigate to='/login' />

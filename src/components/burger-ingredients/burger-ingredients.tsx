@@ -7,9 +7,7 @@ import IngredientsDetails from './ingredients-details/ingredients-details';
 import {modalDeleteIngredient} from '../../services/actions/burger-ingredients/burger-ingredients';
 import {toggleModalIngredient} from '../../services/actions/modal/modal';
 import { useInView } from "react-intersection-observer";
-import { useSelector, useDispatch } from "react-redux";
-import { TIngredient } from '../../utils/prop-types';
-import { useAppDispatch } from '../../utils/prop-types';
+import { useAppDispatch, useAppSelector, TIngredient } from '../../utils/prop-types';
 import { FC, MutableRefObject } from 'react';
 
 type CounterType = {
@@ -18,10 +16,10 @@ type CounterType = {
 
 const BurgerIngredients: FC = () => {
   const [currentTab, setCurrentTab] = useState('bun');
-    // @ts-ignore
-  const ingredients = useSelector(store => store.burgerIngredientsReducer.ingredients);
-    // @ts-ignore
-  const ingredientInModal = useSelector(store => store.modalReducer.isModalIngr);
+
+  const ingredients = useAppSelector(store => store.burgerIngredientsReducer.ingredients);
+  
+  const ingredientInModal = useAppSelector(store => store.modalReducer.isModalIngr);
   const dispatch = useAppDispatch();
 
   const handleTabClick = (tab: string) => {
@@ -76,7 +74,7 @@ const BurgerIngredients: FC = () => {
         <li ref={bunRef}>
           <h2 id='bun' className='pt-5'>Булки</h2>
           <ul className={`ml-4 mr-4 mt-6 mb-5`}>
-            {buns.map((ingredient: TIngredient) => 
+            {buns?.map((ingredient: TIngredient) => 
               <li key={ingredient._id}>
                 <IngredientsItem ingredient={ingredient} />
               </li>
@@ -86,7 +84,7 @@ const BurgerIngredients: FC = () => {
         <li ref={sauceRef}>
           <h2 id='sauce' className='pt-5'>Соусы</h2>
           <ul className={`ml-4 mr-4 mt-6 mb-5`}>
-            {sauces.map((ingredient: TIngredient) =>
+            {sauces?.map((ingredient: TIngredient) =>
               <li key={ingredient._id}>
                 <IngredientsItem ingredient={ingredient} />
               </li>
@@ -96,7 +94,7 @@ const BurgerIngredients: FC = () => {
         <li ref={mainRef}>
           <h2 id='main' className='pt-5'>Начинки</h2>
           <ul className={`ml-4 mr-4 mt-6 mb-5`}>
-            {mains.map((ingredient: TIngredient) =>
+            {mains?.map((ingredient: TIngredient) =>
               <li key={ingredient._id}>
                 <IngredientsItem ingredient={ingredient} />
               </li>
@@ -113,6 +111,5 @@ const BurgerIngredients: FC = () => {
     </>
   )
 }
-
 
 export default BurgerIngredients;

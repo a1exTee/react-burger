@@ -1,4 +1,3 @@
-import React from 'react';
 import { Logo } from '@ya.praktikum/react-developer-burger-ui-components';
 import { BurgerIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import { ListIcon } from '@ya.praktikum/react-developer-burger-ui-components';
@@ -25,7 +24,7 @@ const AppHeader = () => {
                         </span>
                         <span className={`${setMenuClass('text', !!rootLink)}`}>Конструктор</span>
                     </NavLink>
-                    <NavLink to='/orders-feed' className={style.appHeaderItem}>
+                    <NavLink to='/feed' className={style.appHeaderItem}>
                         <span className={`mr-4`}>
                             <ListIcon type={setIconType('primary', !!ordersLink)}  />
                         </span>

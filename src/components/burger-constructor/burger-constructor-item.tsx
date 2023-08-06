@@ -6,7 +6,6 @@ import { DEL_IN_CONSTRUCTOR, REPLACE_INGREDIENT} from "../../services/actions/bu
 import { TIngredient } from '../../utils/prop-types';
 import { useAppDispatch } from '../../utils/prop-types';
 import type { Identifier } from 'dnd-core'
-import { type } from 'os';
 
 
 interface IConstructorIngredient {

@@ -1,12 +1,11 @@
-import { FC, FormEvent, ChangeEvent } from "react";
+import { FC } from "react";
 import forgotPasswordStyles from './ForgotPassword.module.css';
 import { restorePassword } from '../../services/actions/auth/auth';
 import { Input } from '@ya.praktikum/react-developer-burger-ui-components';
 import { Link, Navigate, useLocation } from 'react-router-dom';
-import { useDispatch, useSelector } from 'react-redux';
 import {Form} from '../../components/form/Form';
 import { useForm } from '../../hooks/useForm';
-import { useAppDispatch } from '../../utils/prop-types';
+import { useAppDispatch, useAppSelector } from '../../utils/prop-types';
 
 
 export const ForgotPassword: FC = () => {
@@ -19,10 +18,10 @@ export const ForgotPassword: FC = () => {
     dispatch(restorePassword(values));
   };
 
-    // @ts-ignore
-  const restoreSuccess = useSelector((store) => store.restoreSuccess);
-    // @ts-ignore
-  const isAuthorized = useSelector((store) => store.authReducer.isAuthorized);
+  
+  const restoreSuccess = useAppSelector((store) => store.authReducer.restoreSuccess);
+  
+  const isAuthorized = useAppSelector((store) => store.authReducer.isAuthorized);
 
   if (restoreSuccess) {
     return <Navigate to='/reset-password' />

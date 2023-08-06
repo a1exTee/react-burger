@@ -1,12 +1,11 @@
-import React, { ChangeEvent, FormEvent, useEffect, FC } from "react";
+import { FormEvent, FC } from "react";
 import { Input, PasswordInput } from '@ya.praktikum/react-developer-burger-ui-components';
 import { Link, Navigate, useLocation } from 'react-router-dom';
 import loginStyles from './Login.module.css';
 import { STORE_PASSWORD, login } from '../../services/actions/auth/auth';
-import { useDispatch, useSelector } from 'react-redux';
 import {Form} from '../../components/form/Form';
 import { useForm } from '../../hooks/useForm';
-import { useAppDispatch } from '../../utils/prop-types';
+import { useAppDispatch, useAppSelector } from '../../utils/prop-types';
 
 
 export const Login: FC = () => {
@@ -20,12 +19,14 @@ export const Login: FC = () => {
       type: STORE_PASSWORD,
       password: values.password
     });
+    
+    console.log(dispatch(login(values)));
     dispatch(login(values));
   };
 
-  // @ts-ignore
-  const isAuthorized = useSelector((store) => store.authReducer.isAuthorized);
 
+  const isAuthorized = useAppSelector((store) => store.authReducer.isAuthorized);
+  
   return (
     <div className={loginStyles.container}>
       {isAuthorized

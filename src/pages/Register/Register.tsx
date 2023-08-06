@@ -3,10 +3,9 @@ import registerStyles from './Register.module.css';
 import { registerProfile } from '../../services/actions/auth/auth';
 import { Input, PasswordInput } from '@ya.praktikum/react-developer-burger-ui-components';
 import { Link, Navigate, useLocation } from 'react-router-dom';
-import { useDispatch, useSelector } from 'react-redux';
 import { Form } from '../../components/form/Form';
 import { useForm } from '../../hooks/useForm';
-import { useAppDispatch } from '../../utils/prop-types';
+import { useAppDispatch, useAppSelector } from '../../utils/prop-types';
 
 export function Register() {
   const {values, handleChange } = useForm({ email: '', password: '', name: '' });
@@ -18,14 +17,14 @@ export function Register() {
     dispatch(registerProfile(values));
   };
 
-  // userBurger
-  // userBurger@yandex.ru
+  // ltcool
+  // ltcool@yandex.ru
   // qwerty
 
-    // @ts-ignore
-  const registerSuccess = useSelector((store) => store.registerSuccess);
-    // @ts-ignore
-  const isAuthorized = useSelector((store) => store.authReducer.isAuthorized);
+
+  const registerSuccess = useAppSelector((store) => store.authReducer.registerSuccess);
+  
+  const isAuthorized = useAppSelector((store) => store.authReducer.isAuthorized);
 
   if (registerSuccess) {
     return <Navigate to='/login' />

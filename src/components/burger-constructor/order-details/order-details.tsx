@@ -1,12 +1,12 @@
 
 import style from './order-details.module.css';
 import done from '../../../images/done.svg';
-import { useSelector } from "react-redux";
+import { useAppSelector } from '../../../utils/prop-types';
 import { FC } from 'react';
 
 const OrderDetails: FC = () => {
-    // @ts-ignore
-    const order = useSelector((store) => store.orderReducer);
+
+    const order = useAppSelector((store) => store.orderReducer);
     return (
         <>
             <div className={style.orderDetailsId}>{order.order}</div>

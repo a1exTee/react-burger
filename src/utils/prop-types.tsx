@@ -2,7 +2,8 @@ import { TypedUseSelectorHook, useSelector, useDispatch } from "react-redux";
 import { Action, ActionCreator } from "redux";
 import { ReactElement } from "react";
 import { ThunkAction, ThunkDispatch } from "redux-thunk";
-import { store } from "../../src/index";
+import { store } from "../services/store";
+import { RootState } from "../services/reducers";
 import { ORDER_REQUEST, ORDER_SUCCESS, ORDER_ERROR } from "../services/actions/order/order";
 import { RESET_CONSTRUCTOR } from "../services/actions/burger-constructor/burger-constructor";
 import { INGREDIENTS_REQUEST, INGREDIENTS_SUCCESS, INGREDIENTS_ERROR, MODAL_ADD_INGREDIENT, MODAL_DEL_INGREDIENT } from "../services/actions/burger-ingredients/burger-ingredients";
@@ -88,9 +89,9 @@ export type TIngredient = {
   id: string;
 };
 
-export type TConstructorIngredient = TIngredient & {
+/*export type TConstructorIngredient = TIngredient & {
   id: string;
-};
+};*/
 
 export type TConstructorState = {
   bun: TIngredient | null;
@@ -126,7 +127,7 @@ export type TOrder = {
   _id: string;
   name: string;
   ingredients: Array<string>;
-  status: TOrderStatus;
+  status: TOrderStatus; //string
   number: number;
   createdAt: string;
   updatedAt: string;
@@ -191,7 +192,7 @@ export type TBurgerConstructorActions =
   | TClearConstructor;*/
 
 
-export type RootState = ReturnType<typeof store.getState>;
+
 
 export type AppDispatch = typeof store.dispatch;
 

@@ -1,11 +1,9 @@
-import React from 'react';
 import { ConstructorElement, Button, CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import burgerConstructorStyle from './burger-constructor.module.css';
 import Modal from '../modal/modal';
-import {useMemo} from 'react';
+import {useMemo, FC} from 'react';
 import OrderDetails from './order-details/order-details';
 import { useDrop } from "react-dnd";
-import { useDispatch, useSelector } from "react-redux";
 import {ADD_BUN_IN_CONSTRUCTOR, ADD_IN_CONSTRUCTOR } from "../../services/actions/burger-constructor/burger-constructor";
 import { sendOrder } from "../../services/actions/order/order";
 import { v4 as uuidv4 } from "uuid";
@@ -14,21 +12,21 @@ import BurgerConstructorItem from '../burger-constructor/burger-constructor-item
 import { getCookie } from "../../utils/data";
 import { useNavigate } from 'react-router-dom';
 import { TIngredient } from '../../utils/prop-types';
-import { useAppDispatch } from '../../utils/prop-types';
+import { useAppDispatch, useAppSelector } from '../../utils/prop-types';
+//import { addIngredientInConstructor, addBunsInConstructor, deleteAllIngredients } from '../../services/actions/burger-constructor/burger-constructor';
 
 
-const BurgerConstructor = () => {
+const BurgerConstructor: FC = () => {
 
   const dispatch = useAppDispatch();
-  // @ts-ignore
-  const ingredientInModal = useSelector(store =>  store.modalReducer.isModalOrder);
-    // @ts-ignore
-  const ingredients = useSelector(store => store.burgerConstructorReducer.ingredientsConstructor);
-    // @ts-ignore
-  const bunConstructor = useSelector(store => store.burgerConstructorReducer.bun);
+  const ingredientInModal = useAppSelector(store =>  store.modalReducer.isModalOrder);
+  const ingredients = useAppSelector(store => store.burgerConstructorReducer.ingredientsConstructor);
+  const bunConstructor = useAppSelector(store => store.burgerConstructorReducer.bun);
+  console.log(ingredients);
+  console.log(bunConstructor);
   const navigate = useNavigate();
-    // @ts-ignore
-  const isAuthorized = useSelector((store) => store.authReducer.isAuthorized);
+   
+  const isAuthorized = useAppSelector((store) => store.authReducer.isAuthorized);
 
   const dropHandler = (ingredient: TIngredient) => {
     ingredient.id = uuidv4()
@@ -47,12 +45,12 @@ const BurgerConstructor = () => {
 
   const [, dropTarget] = useDrop({
     accept: 'ingredientDND',
-    drop: (ingredient) => {
+    drop: (ingredient: TIngredient) => {
       dropHandler(JSON.parse(JSON.stringify(ingredient)))
     },
   })
   
-  const ingredientsId = ingredients.map((ingredient: TIngredient) => ingredient._id).concat(bunConstructor._id)
+  const ingredientsId = ingredients.map((ingredient: TIngredient) => ingredient._id).concat(bunConstructor!._id)
   const createOrder = () => {
     if (getCookie('accessToken') && isAuthorized) {
       dispatch(sendOrder(ingredientsId));
@@ -70,13 +68,14 @@ const BurgerConstructor = () => {
     const ingredientsPrice = ingredients.reduce((prev: number, ingr: TIngredient) => {
       return prev + ingr.price;
     }, 0);
-    return ingredientsPrice + (bunConstructor.price > 0 ? bunConstructor.price * 2 : 0)
+    return ingredientsPrice + (bunConstructor!.price > 0 ? bunConstructor!.price * 2 : 0);
   }, [bunConstructor, ingredients]);
-
+  
+console.log(bunConstructor);
      return (
       <div className={`${burgerConstructorStyle.burgerConstructorCol} custom-scroll`}>
         <ul ref={dropTarget}>
-          {Array.isArray(bunConstructor)
+          {!bunConstructor
             ? 
             <div>
               <p>Перетащите булку</p>
@@ -84,9 +83,9 @@ const BurgerConstructor = () => {
             :
             <li className={`${burgerConstructorStyle.ingredient} pl-8 pr-4`}>
               <ConstructorElement
-                text={`${bunConstructor.name} (верх)`}
-                thumbnail={bunConstructor.image_mobile}
-                price={bunConstructor.price}
+                text={`${bunConstructor!.name} (верх)`}
+                thumbnail={bunConstructor!.image_mobile}
+                price={bunConstructor!.price}
                 type="top"
                 isLocked={true}
               />
@@ -104,17 +103,17 @@ const BurgerConstructor = () => {
             )
           )}
           </ul>
-          {Array.isArray(bunConstructor)
+          {!bunConstructor
             ? 
             <div>
               <p>Перетащите булку</p>
             </div>
             :               
-            <li key={bunConstructor.id} className={`${burgerConstructorStyle.element} pl-8 pr-4`}>
+            <li key={bunConstructor!.id} className={`${burgerConstructorStyle.element} pl-8 pr-4`}>
               <ConstructorElement
-                text={`${bunConstructor.name} (низ)`}
-                thumbnail={bunConstructor.image_mobile}
-                price={bunConstructor.price}
+                text={`${bunConstructor!.name} (низ)`}
+                thumbnail={bunConstructor!.image_mobile}
+                price={bunConstructor!.price}
                 type="bottom"
                 isLocked={true}
               />
@@ -134,7 +133,7 @@ const BurgerConstructor = () => {
             type="primary" 
             size="medium" 
             onClick={createOrder}
-            disabled={!bunConstructor.price}
+            disabled={!bunConstructor!.price}
           >
             Оформить заказ
           </Button>

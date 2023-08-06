@@ -51,7 +51,11 @@ type TUserAuthorized = {
 }
 type TStoreUser = {
   readonly type: typeof STORE_USER,
-  user: object
+  user: {
+    email: string,
+    name: string,
+    password?: string
+  }
 }
 type TStorePassowrd = {
   readonly type: typeof STORE_PASSWORD,
