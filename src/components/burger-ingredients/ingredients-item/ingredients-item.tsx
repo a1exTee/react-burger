@@ -26,7 +26,9 @@ const IngredientsItem : FC<{ ingredient: TIngredient }> = ({
   const count = useMemo(() => {
     const allIngredients = [bun, bun, ...ingredients];
     console.log(allIngredients);
-    return allIngredients.reduce((sum, item) => ingredient._id === item!._id ? sum + 1 : sum, 0);
+
+    return allIngredients.reduce((sum, item) => ingredient._id === item?._id ? sum + 1 : sum, 0);
+
   }, [ingredients, bun, ingredient._id]);
 
 

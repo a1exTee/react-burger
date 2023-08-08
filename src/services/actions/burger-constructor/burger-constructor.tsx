@@ -27,7 +27,7 @@ export interface IAddIngredient {
   
   export interface IAddBuns {
     readonly type: typeof ADD_BUN_IN_CONSTRUCTOR;
-    bun: Array<TIngredient> 
+    bun: TIngredient 
   }
   
   
@@ -44,7 +44,7 @@ export interface IAddIngredient {
     ;
   
 
-  export const addIngredientInConstructor = (ingredientsConstructor: TIngredient): IAddIngredient => ({
+  /*export const addIngredientInConstructor = (ingredientsConstructor: TIngredient): IAddIngredient => ({
     type: ADD_IN_CONSTRUCTOR,
     ingredientsConstructor
   });
@@ -66,4 +66,4 @@ export interface IAddIngredient {
   
   export const deleteAllIngredients = (): IDeleteAllIngredient => ({
     type: RESET_CONSTRUCTOR
-  });
+  });*/

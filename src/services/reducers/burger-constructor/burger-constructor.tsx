@@ -4,7 +4,7 @@ import { TIngrediensConstructorActions } from "../../actions/burger-constructor/
 
 
 type TBurgerConstructorReducer = {
-  ingredientsConstructor: Array<TIngredient> | [],
+  ingredientsConstructor: Array<TIngredient>,
   bun?: TIngredient | null
 }
 

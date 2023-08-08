@@ -50,7 +50,8 @@ const BurgerConstructor: FC = () => {
     },
   })
   
-  const ingredientsId = ingredients.map((ingredient: TIngredient) => ingredient._id).concat(bunConstructor!._id)
+ 
+  const ingredientsId = ingredients.map((ingredient: TIngredient) => ingredient!._id).concat(bunConstructor!._id)
   const createOrder = () => {
     if (getCookie('accessToken') && isAuthorized) {
       dispatch(sendOrder(ingredientsId));
