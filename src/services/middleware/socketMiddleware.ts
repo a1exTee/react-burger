@@ -1,5 +1,4 @@
 import { RootState } from "../reducers";
-import { MiddlewareAPI } from "@reduxjs/toolkit";
 import { Middleware } from "redux";
 import { getCookie } from "../../utils/data";
 

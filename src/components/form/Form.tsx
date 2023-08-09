@@ -1,29 +1,17 @@
 import formStyles from './Form.module.css';
 import { Button } from '@ya.praktikum/react-developer-burger-ui-components';
-import {FC, ReactElement} from 'react'
-
-export interface IFormValues {
-  [key: string]: string;
-}
+import {FC, ReactElement, FormEvent} from 'react'
 
 export type TForm = {
   //name?: string;
   //email?: string;
   //password?: string;
   children?: JSX.Element|JSX.Element[],
-  onSubmit: (values: IFormValues) => void,
+  onSubmit: (e: FormEvent) => void,
   title?: string;
   inputs?: {name: string; placeholder: string}[];
   buttonText?: string;
 };
-
-
-/*export interface IUseForm {
-  values: IFormValues;
-  setFormValues: (values: IFormValues) => void;
-  handleChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
-}*/
-
 
 export const Form: FC<TForm> = ({ title, buttonText, onSubmit, children }: TForm) => {
   return (

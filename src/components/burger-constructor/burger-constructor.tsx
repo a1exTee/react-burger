@@ -4,7 +4,6 @@ import Modal from '../modal/modal';
 import {useMemo, FC} from 'react';
 import OrderDetails from './order-details/order-details';
 import { useDrop } from "react-dnd";
-import {ADD_BUN_IN_CONSTRUCTOR, ADD_IN_CONSTRUCTOR } from "../../services/actions/burger-constructor/burger-constructor";
 import { sendOrder } from "../../services/actions/order/order";
 import { v4 as uuidv4 } from "uuid";
 import {toggleModalOrder} from '../../services/actions/modal/modal';
@@ -13,7 +12,7 @@ import { getCookie } from "../../utils/data";
 import { useNavigate } from 'react-router-dom';
 import { TIngredient } from '../../utils/prop-types';
 import { useAppDispatch, useAppSelector } from '../../utils/prop-types';
-//import { addIngredientInConstructor, addBunsInConstructor, deleteAllIngredients } from '../../services/actions/burger-constructor/burger-constructor';
+import { addIngredientInConstructor, addBunsInConstructor, deleteAllIngredients } from '../../services/actions/burger-constructor/burger-constructor';
 
 
 const BurgerConstructor: FC = () => {
@@ -22,25 +21,17 @@ const BurgerConstructor: FC = () => {
   const ingredientInModal = useAppSelector(store =>  store.modalReducer.isModalOrder);
   const ingredients = useAppSelector(store => store.burgerConstructorReducer.ingredientsConstructor);
   const bunConstructor = useAppSelector(store => store.burgerConstructorReducer.bun);
-  console.log(ingredients);
-  console.log(bunConstructor);
   const navigate = useNavigate();
    
   const isAuthorized = useAppSelector((store) => store.authReducer.isAuthorized);
 
   const dropHandler = (ingredient: TIngredient) => {
-    ingredient.id = uuidv4()
+    ingredient.id = uuidv4();
     ingredient.type === 'bun' 
       ?
-      dispatch({
-        type: ADD_BUN_IN_CONSTRUCTOR,
-        bun: ingredient,
-      })
+      dispatch(addBunsInConstructor(ingredient))
       :
-      dispatch({
-        type: ADD_IN_CONSTRUCTOR,
-        ingredientsConstructor: ingredient,
-      })
+      dispatch(addIngredientInConstructor({ ...ingredient, id: uuidv4() }));
   }
 
   const [, dropTarget] = useDrop({
@@ -48,12 +39,11 @@ const BurgerConstructor: FC = () => {
     drop: (ingredient: TIngredient) => {
       dropHandler(JSON.parse(JSON.stringify(ingredient)))
     },
-  })
-  
- 
-  const ingredientsId = ingredients.map((ingredient: TIngredient) => ingredient!._id).concat(bunConstructor!._id)
+  });
+
   const createOrder = () => {
-    if (getCookie('accessToken') && isAuthorized) {
+    if (getCookie('accessToken') && isAuthorized && bunConstructor) {
+      const ingredientsId = ingredients?.map((ingredient: TIngredient) => ingredient._id).concat(bunConstructor._id);
       dispatch(sendOrder(ingredientsId));
       dispatch(toggleModalOrder(true));
     } else {
@@ -69,10 +59,11 @@ const BurgerConstructor: FC = () => {
     const ingredientsPrice = ingredients.reduce((prev: number, ingr: TIngredient) => {
       return prev + ingr.price;
     }, 0);
-    return ingredientsPrice + (bunConstructor!.price > 0 ? bunConstructor!.price * 2 : 0);
+    return ingredientsPrice + (bunConstructor ? bunConstructor.price * 2 : 0);
   }, [bunConstructor, ingredients]);
   
-console.log(bunConstructor);
+
+
      return (
       <div className={`${burgerConstructorStyle.burgerConstructorCol} custom-scroll`}>
         <ul ref={dropTarget}>
@@ -100,7 +91,7 @@ console.log(bunConstructor);
             </div>
             :
             ingredients.map((ingredient: TIngredient, index: number) => (
-              <BurgerConstructorItem key={ingredient.id} ingredient={ingredient} index={index} />
+              <BurgerConstructorItem key={ingredient.id} ingredient={ingredient} index={index} id={ingredient.id} />
             )
           )}
           </ul>
@@ -134,7 +125,7 @@ console.log(bunConstructor);
             type="primary" 
             size="medium" 
             onClick={createOrder}
-            disabled={!bunConstructor!.price}
+            disabled={!bunConstructor}
           >
             Оформить заказ
           </Button>

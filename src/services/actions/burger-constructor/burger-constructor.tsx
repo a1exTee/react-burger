@@ -18,6 +18,7 @@ export interface IAddIngredient {
   
   type IngredientOrder = {
     dragIndex: number,
+    hoverIndex: number
   };
   
   export interface IIngredientMove {
@@ -44,7 +45,7 @@ export interface IAddIngredient {
     ;
   
 
-  /*export const addIngredientInConstructor = (ingredientsConstructor: TIngredient): IAddIngredient => ({
+  export const addIngredientInConstructor = (ingredientsConstructor: TIngredient): IAddIngredient => ({
     type: ADD_IN_CONSTRUCTOR,
     ingredientsConstructor
   });
@@ -59,11 +60,11 @@ export interface IAddIngredient {
     item
   });
   
-  export const addBunsInConstructor = (bun: Array<TIngredient>): IAddBuns => ({
+  export const addBunsInConstructor = (bun: TIngredient): IAddBuns => ({
     type: ADD_BUN_IN_CONSTRUCTOR,
     bun
   });
   
   export const deleteAllIngredients = (): IDeleteAllIngredient => ({
     type: RESET_CONSTRUCTOR
-  });*/
+  });

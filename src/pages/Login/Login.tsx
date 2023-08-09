@@ -13,20 +13,20 @@ export const Login: FC = () => {
   const location = useLocation();
   const dispatch = useAppDispatch();
 
-  function onSubmit(e: FormEvent) {
+  const onSubmit = (e: FormEvent) => {
     e.preventDefault();
+    console.log(e);
     dispatch({
       type: STORE_PASSWORD,
       password: values.password
     });
-    
     console.log(dispatch(login(values)));
     dispatch(login(values));
   };
 
 
   const isAuthorized = useAppSelector((store) => store.authReducer.isAuthorized);
-  
+  console.log(isAuthorized);
   return (
     <div className={loginStyles.container}>
       {isAuthorized
@@ -36,7 +36,7 @@ export const Login: FC = () => {
             <Form
               title={'Вход'}
               buttonText={'Войти'}
-              onSubmit={() => onSubmit}
+              onSubmit={onSubmit}
             >
               <Input type='email' name='email' placeholder='E-mail' value={values.email || ''} onChange={handleChange} />
               <PasswordInput name='password' value={values.password || ''} onChange={handleChange} />

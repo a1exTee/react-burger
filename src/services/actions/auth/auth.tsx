@@ -59,7 +59,7 @@ type TStoreUser = {
 }
 type TStorePassowrd = {
   readonly type: typeof STORE_PASSWORD,
-  password: string
+  password: string 
 }
 type TClearConstructor = {
   readonly type: typeof CLEAR_USER,
@@ -201,8 +201,11 @@ export function registerProfile(data: object) {
   }
 };
 
-export const login: AppThunk =(data: object) => {
+export function login(data: object){
+  console.log(data);
   return async function (dispatch: AppDispatch) {
+    console.log(data);
+    
     dispatch({ type: LOGIN_REQUEST });
     requestData(loginUrl, {
       method: 'POST',
@@ -231,7 +234,7 @@ export const login: AppThunk =(data: object) => {
 };
 
 
-export const getUser: AppThunk = () => {
+export function getUser(){
   return async function (dispatch: AppDispatch) {
     dispatch({ type: GET_USER_REQUEST });
     getUserFetch()

@@ -109,6 +109,8 @@ export type TRefreshData = {
 
 export const requestData = async (url: string, options: RequestInit) => {
   //console.log(fetch, options);
+  console.log(url);
+  console.log(options);
   try {
     const res = await fetch(url, options); 
     return await checkResponse(res);

@@ -37,8 +37,9 @@ type TBurgerConstructorReducer = {
         return initialState
 
       case REPLACE_INGREDIENT: {
-        const items = [...state.ingredientsConstructor]
-          items.splice(action.item.dragIndex, 0)
+        const items = [...state.ingredientsConstructor];
+        items.splice(action.item.dragIndex, 0, 
+        items.splice(action.item.hoverIndex, 1)[0])
         return {
           ...state,
           ingredientsConstructor: items,
