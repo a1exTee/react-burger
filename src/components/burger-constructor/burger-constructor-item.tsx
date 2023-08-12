@@ -37,8 +37,6 @@ const BurgerConstructorItem: FC<IConstructorIngredient> = ({index, ingredient, i
       if (!ref.current) {return}
       const dragIndex = ingredients.index;
       const hoverIndex = index;
-      console.log(hoverIndex);
-      console.log(dragIndex);
       dispatch(moveIngredientInConstructor({ dragIndex, hoverIndex }));
       /*dispatch({
         type: REPLACE_INGREDIENT,

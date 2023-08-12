@@ -46,8 +46,8 @@ export const socketMiddleware = (wsUrl: string, wsActions: TWsActions, auth: boo
 
         socket.onclose = (event: CloseEvent) => {
           dispatch({ type: onClose, payload: event });
-          socket!.close();
-          socket = null;
+          //socket!.close();
+          //socket = null;
         };
       }
 

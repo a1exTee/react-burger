@@ -8,6 +8,7 @@ import {IngredientDetailsPage} from "../../pages/IngredientDetailsPage/Ingredien
 import {Login} from "../../pages/Login/Login";
 import {Page404} from "../../pages/Page404/Page404";
 import {Profile} from "../../pages/Profile/Profile";
+import ProfileInfo from "../profile-info/profile-info";
 import {Register} from "../../pages/Register/Register";
 import {ResetPassword} from "../../pages/ResetPassword/ResetPassword";
 import Feed from "../../pages/Feed/feed";
@@ -18,8 +19,7 @@ import { WS_AUTH_CONNECTION_CLOSED, WS_AUTH_CONNECTION_START } from "../../servi
 import { WS_CONNECTION_CLOSED, WS_CONNECTION_START } from "../../services/actions/ws/ws-actions";
 import { BrowserRouter as Router, Routes, Route, useLocation, useNavigate } from 'react-router-dom';
 import { FC, useEffect } from "react";
-import { getCookie } from "../../utils/data";
-import { getUser } from "../../services/actions/auth/auth";
+import { getUserData } from "../../services/actions/auth/auth"; 
 import ProtectedRoute from "../ProtectedRoute";
 import Modal from '../modal/modal';
 import IngredientsDetails from '../burger-ingredients/ingredients-details/ingredients-details';
@@ -31,25 +31,21 @@ export const App: FC = () => {
 
   const dispatch = useAppDispatch();
   const location = useLocation();
-  const navigate = useNavigate();
+  const navigate = useNavigate(); 
   const background = location.state && location.state.background;
+  const userData = useAppSelector((store) => store.userInfoReducer);
   const wsOrdersData = useAppSelector((store) => store.wsReducer.orders);
   const wsAuthOrdersData = useAppSelector((store) => store.wsAuthReducer.orders);
   const handleModalClose = () => {
     // Возвращаемся к предыдущему пути при закрытии модалки
     navigate(-1);
   };
-  
-  useEffect(() => {
-    if (getCookie('accessToken')) {
-      dispatch(getUser());
-    }
-  }, [dispatch]);
 
   useEffect(() => {
     dispatch(getIngredients());
-  }, [dispatch]);
-
+    dispatch(getUserData());
+  }, [dispatch])
+  
   const { ingredientsChecker, ingredientsRequest, ingredients } = useAppSelector(
     (state) => state.burgerIngredientsReducer
   );
@@ -64,7 +60,7 @@ export const App: FC = () => {
 
   return (
     <>
-      {ingredientsRequest && <h2>Загрузка...</h2>}
+      {ingredientsRequest && userData && <h2>Загрузка...</h2>}
       {!ingredientsRequest && ingredientsChecker && <h2>Ошибка</h2>}
       {!ingredientsRequest && !ingredientsChecker && ingredients?.length && (
         <main className={style.App}>
@@ -72,22 +68,22 @@ export const App: FC = () => {
             <ErrorBoundary>
               <AppHeader />
               <Routes location={background || location}>
-                <Route path='/orders' element={<Page404 />} />
-                <Route path="/login" element={<Login />} />
-                <Route path="/register" element={<Register />} />
-                <Route path="/forgot-password" element={<ForgotPassword />} />
-                <Route path="/reset-password" element={<ResetPassword />} />
-                <Route path="/profile" element={<ProtectedRoute children={<Profile />} />}>
+                <Route path="/" element={<HomePage />} />
+                <Route path="/*" element={<Page404 />} />
+                <Route path="/login" element={<ProtectedRoute anonymous><Login /></ProtectedRoute>} />
+                <Route path="/profile" element={<ProtectedRoute ><Profile /></ProtectedRoute>}>
+                  <Route path="" element={<ProfileInfo />} />
                   <Route path="orders" element={<ProfileOrders reverse path={'/profile/orders'} />} />
                 </Route>
                 <Route path="/profile/orders/:id" element={<ProtectedRoute>
                   <OrderFullScreen start={WS_AUTH_CONNECTION_START} close={WS_AUTH_CONNECTION_CLOSED} data={wsAuthOrdersData!} /></ProtectedRoute>}
                 />
-                <Route path="/feed" element={<Feed path={'/feed'} />} />
-                <Route path="/feed/:id" element={<OrderFullScreen start={WS_CONNECTION_START} close={WS_CONNECTION_CLOSED} data={wsOrdersData!} />} />
+                <Route path="/register" element={<ProtectedRoute><Register /></ProtectedRoute>} />
+                <Route path="/reset-password" element={<ProtectedRoute anonymous><ResetPassword /></ProtectedRoute>} />
+                <Route path="/forgot-password" element={<ProtectedRoute anonymous><ForgotPassword /></ProtectedRoute>} />
                 <Route path="/ingredients/:id" element={<IngredientDetailsPage />} />
-                <Route path="/*" element={<Page404 />} />
-                <Route path="/" element={<HomePage />} />
+                <Route path="/feed" element={<Feed path={'/feed'} />} />
+                <Route path="/feed/:id" element={<OrderFullScreen start={WS_CONNECTION_START} close={WS_CONNECTION_CLOSED} data={wsOrdersData!} />} />               
               </Routes>
               {background && (
                 <Routes>

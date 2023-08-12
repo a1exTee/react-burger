@@ -15,7 +15,7 @@ import {
   WS_AUTH_CONNECTION_ERROR,
   WS_AUTH_CONNECTION_CLOSED,
   WS_GET_AUTH_ORDERS
-} from "./actions/ws/ws-auth-actions";
+} from "./actions/ws/ws-auth-actions"; 
 
 const wsUrl = 'wss://norma.nomoreparties.space'
 const wsActions = {
@@ -33,8 +33,6 @@ const wsAuthActions = {
   getOrders: WS_GET_AUTH_ORDERS
 };
 
-
-export type AppDispatch = typeof store.dispatch; 
 
 declare global {
   interface Window {

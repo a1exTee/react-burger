@@ -23,7 +23,7 @@ const BurgerConstructor: FC = () => {
   const bunConstructor = useAppSelector(store => store.burgerConstructorReducer.bun);
   const navigate = useNavigate();
    
-  const isAuthorized = useAppSelector((store) => store.authReducer.isAuthorized);
+  const isAuthorized = useAppSelector((store) => store.userInfoReducer); 
 
   const dropHandler = (ingredient: TIngredient) => {
     ingredient.id = uuidv4();

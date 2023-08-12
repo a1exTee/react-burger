@@ -1,269 +1,127 @@
 import {
-  USER_AUTHORIZED,
-  STORE_USER,
-  STORE_PASSWORD,
-  CLEAR_USER,
-  PATCH_USER_REQUEST,
-  PATCH_USER_SUCCESS,
-  PATCH_USER_FAIL,
-  REGISTER_REQUEST,
-  REGISTER_SUCCESS,
-  REGISTER_FAIL,
-  LOGIN_REQUEST,
-  LOGIN_SUCCESS,
-  LOGIN_FAIL,
-  LOGOUT_REQUEST,
-  LOGOUT_SUCCESS,
-  LOGOUT_FAIL,
-  RESTORE_PASS_REQUEST,
-  RESTORE_PASS_SUCCESS,
-  RESTORE_PASS_FAIL,
-  RESET_PASS_REQUEST,
-  RESET_PASS_SUCCESS,
-  RESET_PASS_FAIL,
-  TRegisterUserActions,
-  TRestorePasswordActions,
-  TResetPasswordActions,
-  TLoginActions,
-  TGetUserActions,
-  TLogoutActions,
-  TPatchUserActions,
-  TUserActions
-} from "../../actions/auth/auth";
+  USER_LOGIN_REQUEST,
+  USER_LOGIN_SUCCESS,
+  USER_LOGIN_FAILED,
+  USER_LOGOUT,
+  USER_DATA_REQUEST,
+  USER_DATA_SUCCESS,
+  USER_DATA_FAILED,
+  REFRESH_ACCESS_TOKEN_FAILED,
+  REFRESH_ACCESS_TOKEN_SUCCESS,
+  REFRESH_ACCESS_TOKEN_REQUEST,
+  USER_DATA_UPDATE_REQUEST,
+  USER_DATA_UPDATE_SUCCESS,
+  USER_DATA_UPDATE_FAILED,
+  TLoginActions
+} from '../../actions/auth/auth'; 
 
-
-export type TUserState = {
-  isAuthorized: boolean,
+type TInitialState = {
+  loginRequest: boolean,
+  loginRequestFailed: boolean,
+  userDataLoaded: boolean,
+  userDataRequest: boolean,
+  userDataRequestFailed: boolean,
+  userDataUpdateRequest: boolean,
+  userDataUpdateFailed: boolean,
+  accessTokenRequest: boolean,
+  accessTokenRequestFailed: boolean,
+  isAuthenticated: boolean,
   user: {
     email: string,
-    name: string,
+    name: string
   },
-  password: null | undefined | string,
-  getUserRequest: boolean,
-  getUserSuccess: boolean,
-  getUserFail: boolean,
-  patchUserRequest: boolean,
-  patchUserSuccess: boolean,
-  patchUserFail: boolean,
-  registerRequest: boolean,
-  registerSuccess: boolean,
-  registerFailed: boolean,
-  loginRequest: boolean,
-  loginSuccess: boolean,
-  loginFailed: boolean,
-  logoutRequest: boolean,
-  logoutSuccess: boolean,
-  logoutFailed: boolean,
-  restoreRequest: boolean,
-  restoreSuccess: boolean,
-  restoreFailed: boolean,
-  resetRequest: boolean,
-  resetSuccess: boolean,
-  resetFailed: boolean,
-  isLoading: boolean,
-  isLogin: boolean,
+  accessToken: string,
+  refreshToken: string
 }
 
-const initialState: TUserState = {
-  isAuthorized: false,
-  user: {
-    email: '',
-    name: '',
-  },
-  password: null,
-  getUserRequest: false,
-  getUserSuccess: false,
-  getUserFail: false,
-  patchUserRequest: false,
-  patchUserSuccess: false,
-  patchUserFail: false,
-  registerRequest: false,
-  registerSuccess: false,
-  registerFailed: false,
+const initialState: TInitialState = {
   loginRequest: false,
-  loginSuccess: false,
-  loginFailed: false,
-  logoutRequest: false,
-  logoutSuccess: false,
-  logoutFailed: false,
-  restoreRequest: false,
-  restoreSuccess: false,
-  restoreFailed: false,
-  resetRequest: false,
-  resetSuccess: false,
-  resetFailed: false,
-  isLoading: false,
-  isLogin: false,
+  loginRequestFailed: false,
+  userDataLoaded: false,
+  userDataRequest: false,
+  userDataRequestFailed: false,
+  userDataUpdateRequest: false,
+  userDataUpdateFailed: false,
+  accessTokenRequest: false,
+  accessTokenRequestFailed: false,
+  isAuthenticated: false,
+  user: {
+    email: "",
+    name: ""
+  },
+  accessToken: "",
+  refreshToken: ""
 };
 
-export const authReducer = (state = initialState, action: TUserActions | TRegisterUserActions | TRestorePasswordActions | 
-  TResetPasswordActions | TLoginActions | TGetUserActions | TLogoutActions | TPatchUserActions): TUserState => {
+export const userInfoReducer = (state = initialState, action: TLoginActions) => {
   switch (action.type) {
-    case USER_AUTHORIZED: {
+    case USER_LOGIN_REQUEST:
+      return { ...state, loginRequest: true };
+    case USER_LOGIN_SUCCESS:
       return {
         ...state,
-        isAuthorized: action.isAuthorized
-      }
-    }
-    case STORE_USER: {
+        loginRequest: false,
+        loginRequestFailed: false,
+        userDataLoaded: true,
+        isAuthenticated: true,
+        user: action.payload.user,
+        accessToken: action.payload.accessToken.split("Bearer ")[1],
+        refreshToken: action.payload.refreshToken
+      };
+    case USER_LOGIN_FAILED:
+      return { ...state, loginRequest: false, loginRequestFailed: true, };
+    case USER_LOGOUT:
       return {
         ...state,
-        user: action.user
-      }
-    }
-    case STORE_PASSWORD: {
-      return {
-        ...state,
-        password: action.password
-      }
-    }
-    case CLEAR_USER: {
-      return {
-        ...state,
+        loginRequest: false,
+        loginRequestFailed: false,
+        userDataRequest: false,
+        userDataRequestFailed: false,
+        isAuthenticated: false,
         user: {
-          email: '',
-          name: '',
-        }
-      }
-    }
-    case PATCH_USER_REQUEST: {
-      return {
-        ...state,
-        patchUserRequest: true,
-        patchUserSuccess: false,
-        patchUserFail: false
-      }
-    }
-    case PATCH_USER_SUCCESS: {
-      return {
-        ...state,
-        patchUserRequest: false,
-        patchUserSuccess: true,
-        patchUserFail: false
-      }
-    }
-    case PATCH_USER_FAIL: {
-      return {
-        ...state,
-        patchUserRequest: false,
-        patchUserSuccess: false,
-        patchUserFail: true
-      }
-    }
-    case REGISTER_REQUEST: {
-      return {
-        ...state,
-        registerRequest: true,
-        registerSuccess: false,
-        registerFailed: false
-      }
-    }
-    case REGISTER_SUCCESS: {
-      return {
-        ...state,
-        registerRequest: false,
-				registerSuccess: true,
-				registerFailed: false
+          email: "",
+          name: ""
+        },
+        accessToken: "",
+        refreshToken: ""
       };
-    }
-    case REGISTER_FAIL: {
+    case USER_DATA_REQUEST:
+      return { ...state, userDataRequest: true };
+    case USER_DATA_SUCCESS:
       return {
         ...state,
-        registerRequest: false,
-				registerSuccess: false,
-				registerFailed: true
-      }
-    }
-    case LOGIN_REQUEST: {
-      return {
-        ...state,
-        loginRequest: true
-      }
-    }
-    case LOGIN_SUCCESS: {
-      return {
-        ...state,
-        loginRequest: false,
-				loginSuccess: true,
-				loginFailed: false
+        userDataRequest: false,
+        userDataLoaded: true,
+        isAuthenticated: true,
+        user: action.payload.user,
       };
-    }
-    case LOGIN_FAIL: {
+    case USER_DATA_FAILED:
+      return { ...state, userDataRequest: false };
+
+    case USER_DATA_UPDATE_REQUEST:
+      return { ...state, userDataUpdateRequest: true };
+    case USER_DATA_UPDATE_SUCCESS:
       return {
-        ...state,
-        loginRequest: false,
-				loginSuccess: false,
-				loginFailed: true
-      }
-    }
-    case LOGOUT_REQUEST: {
-      return {
-        ...state,
-        logoutRequest: true
-      }
-    }
-    case LOGOUT_SUCCESS: {
-      return {
-        ...state,
-        logoutRequest: false,
-				logoutSuccess: true,
-				logoutFailed: false
+        ...state, userDataUpdateRequest: false,
+        userDataUpdateFailed: false,
+        user: action.payload.user
       };
-    }
-    case LOGOUT_FAIL: {
+    case USER_DATA_UPDATE_FAILED:
+      return { ...state, userDataRequest: false, userDataUpdateFailed: true };
+
+    case REFRESH_ACCESS_TOKEN_REQUEST:
+      return { ...state, accessTokenRequest: true };
+    case REFRESH_ACCESS_TOKEN_SUCCESS:
       return {
         ...state,
-        logoutRequest: false,
-				logoutSuccess: false,
-				logoutFailed: true
-      }
-    }
-    case RESTORE_PASS_REQUEST: {
-      return {
-        ...state,
-        restoreRequest: true
-      }
-    }
-    case RESTORE_PASS_SUCCESS: {
-      return {
-        ...state,
-        restoreRequest: false,
-				restoreSuccess: true,
-				restoreFailed: false
+        accessTokenRequest: false,
+        accessTokenRequestFailed: false,
+        accessToken: action.payload.accessToken.split("Bearer ")[1],
+        refreshToken: action.payload.refreshToken
       };
-    }
-    case RESTORE_PASS_FAIL: {
-      return {
-        ...state,
-        restoreRequest: false,
-				restoreSuccess: false,
-				restoreFailed: true
-      }
-    }
-    case RESET_PASS_REQUEST: {
-      return {
-        ...state,
-        resetRequest: true
-      }
-    }
-    case RESET_PASS_SUCCESS: {
-      return {
-        ...state,
-        resetRequest: false,
-				resetSuccess: true,
-				resetFailed: false
-      };
-    }
-    case RESET_PASS_FAIL: {
-      return {
-        ...state,
-        resetRequest: false,
-				resetSuccess: false,
-				resetFailed: true
-      }
-    }
-    default: {
+    case REFRESH_ACCESS_TOKEN_FAILED:
+      return { ...state, accessTokenRequestFailed: false, };
+    default:
       return state;
-    }
   }
 }

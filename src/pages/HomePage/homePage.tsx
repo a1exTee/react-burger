@@ -5,10 +5,12 @@ import BurgerConstructor from "../../components/burger-constructor/burger-constr
 import { DndProvider } from "react-dnd";
 import { HTML5Backend } from "react-dnd-html5-backend";
 import { useAppSelector } from "../../utils/prop-types";
+import { FC } from 'react';
 
-export function HomePage() {
+export const HomePage: FC = () => {
 
   const { ingredientsChecker, ingredientsRequest, ingredients } = useAppSelector((state) => state.burgerIngredientsReducer);
+  const userData = useAppSelector((store) => store.userInfoReducer); //подгрузка данных из стора
 
   if (ingredientsRequest) {
     return <h2>Загрузка...</h2>;

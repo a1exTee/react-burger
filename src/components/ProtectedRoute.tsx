@@ -1,18 +1,18 @@
 import { useLocation, Navigate } from 'react-router-dom';
 import { ReactElement } from 'react';
-import { useAppSelector } from '../utils/prop-types';
+import { getCookie } from '../utils/data';
+import { FC } from 'react';
 
 type TProtectedRouteElement = {
   children: ReactElement,
   anonymous?: boolean
 }
 
-export default function ProtectedRoute({ children, anonymous = false }: TProtectedRouteElement) {
+const ProtectedRoute: FC<TProtectedRouteElement> = ({ children, anonymous = false }) => {
 
-  const isAuthorized = useAppSelector((store) => store.authReducer.isAuthorized);
-
+  const isAuthorized = getCookie("accessToken");
   const location = useLocation();
-  const from = location.state?.from || '/';
+  const from = location.state?.from.pathname || '/';
   
   if (anonymous && isAuthorized) {
     return <Navigate to={ from } />
@@ -24,3 +24,5 @@ export default function ProtectedRoute({ children, anonymous = false }: TProtect
 
   return children;
 }
+
+export default ProtectedRoute;

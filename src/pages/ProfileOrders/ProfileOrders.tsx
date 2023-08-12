@@ -1,5 +1,5 @@
 import { useEffect } from 'react';
-import styles from './ProfileOrders.module.css'
+import styles from './profile-orders.module.css'
 import { WS_AUTH_CONNECTION_START, WS_AUTH_CONNECTION_CLOSED } from '../../services/actions/ws/ws-auth-actions';
 import { useAppDispatch, useAppSelector } from '../../utils/prop-types';
 import Orders from '../../components/orders/orders';

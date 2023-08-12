@@ -1,57 +1,37 @@
 import resetPasswordStyles from './ResetPassword.module.css';
-import { resetPassword } from '../../services/actions/auth/auth';
-import { Input, PasswordInput } from '@ya.praktikum/react-developer-burger-ui-components';
-import { Link, Navigate, useLocation } from 'react-router-dom';
-import { Form } from '../../components/form/Form';
+import { resetPassword } from '../../services/actions/auth/reset-password';
+import { Input, PasswordInput, Button } from '@ya.praktikum/react-developer-burger-ui-components';
+import { Link, useNavigate } from 'react-router-dom';
 import { useForm } from '../../hooks/useForm';
 import { FC } from "react";
 import { useAppDispatch, useAppSelector } from '../../utils/prop-types';
 
 export const ResetPassword: FC = () => {
-  const {values, handleChange } = useForm({ password: '', token: '' });
-  const location = useLocation();
   const dispatch = useAppDispatch();
+  const { verificationSent } = useAppSelector((store) => store.resetPasswordReducer);
+  const navigate = useNavigate();
+  const {values, handleChange } = useForm({ password: '', token: '' });
 
-  function onSubmit(e: React.ChangeEvent<HTMLFormElement>) {
+  const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    dispatch(resetPassword(values));
-  };
+    dispatch(resetPassword(values.newPassword, values.token));
+    navigate('/login')
+  }
 
-   
-  const resetSuccess = useAppSelector((store) => store.authReducer.resetSuccess);
-   
-  const restoreSuccess = useAppSelector((store) => store.authReducer.restoreSuccess);
-
-  const isAuthorized = useAppSelector((store) => store.authReducer.isAuthorized);
-
-  if (resetSuccess) {
-    return <Navigate to='/login' />
-  };
-
-  if (!restoreSuccess) {
-    return <Navigate to='/forgot-password' />
-  };
+  if (!verificationSent) {
+    navigate('/forgot-password')
+  }
 
   return (
     <div className={resetPasswordStyles.container}>
-      {isAuthorized
-        ? (<Navigate to={location?.state?.from || '/'} />)
-        : (
-          <>
-            <Form
-              title={'Восстановление пароля'}
-              buttonText={'Сохранить'}
-              onSubmit={() => onSubmit}
-            >
-              <PasswordInput name='password' placeholder='Введите новый пароль' value={values.password || ''} onChange={handleChange} />
-              <Input name='token' type='text' placeholder='Введите код из письма' value={values.token || ''} onChange={handleChange} />
-            </Form>
-            <div className={`text text_type_main-default ${resetPasswordStyles.tips}`}>
-              <p>Вспомнили пароль? <Link className={resetPasswordStyles.link} to='/login'>Войти</Link></p>
-            </div>
-          </>
-        )
-      }
+      <form onSubmit={onSubmit}>
+        <PasswordInput name='password' placeholder='Введите новый пароль' value={values.password || ''} onChange={handleChange} />
+        <Input name='token' type='text' placeholder='Введите код из письма' value={values.token || ''} onChange={handleChange} />
+        <Button htmlType='submit'>Сохранить</Button>
+      </form>
+      <div className={`text text_type_main-default ${resetPasswordStyles.tips}`}>
+        <p>Вспомнили пароль? <Link className={resetPasswordStyles.link} to='/login'>Войти</Link></p>
+      </div>
     </div>
   )
 }

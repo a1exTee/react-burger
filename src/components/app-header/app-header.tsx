@@ -14,7 +14,7 @@ const AppHeader = () => {
     const registerLink = useMatch('/register');
     const loginLink = useMatch('/login');
     const forgotPassLink = useMatch('/forgot-password');
-    const resetPassLink = useMatch('/reset-password');
+    const resetPassLink = useMatch('/reset-password'); 
 
       return <header className={style.appHeader}>
                 <nav className={style.appHeaderNav}>

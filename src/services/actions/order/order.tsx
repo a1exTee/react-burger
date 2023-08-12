@@ -7,26 +7,26 @@ export const ORDER_SUCCESS: "ORDER_SUCCESS" = "ORDER_SUCCESS";
 export const ORDER_ERROR: "ORDER_ERROR" = "ORDER_ERROR";
 
 
-export const getOrderData = (idArray: Array<string>) => {
+export const getOrderData = (payload: Array<string>) => {
   return fetch(`${apiUrl}orders`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json'
     },
     body: JSON.stringify({
-      'ingredients': idArray
+      'ingredients': payload
     })
   })
   .then((res) => checkResponse(res))
 }
 
-export const sendOrder: AppThunk = (idArray: Array<string>) => {
+export const sendOrder: AppThunk = (payload: Array<string>) => {
   return function(dispatch: AppDispatch) {
   dispatch({
     type: ORDER_REQUEST,
   });
 
-  getOrderData(idArray)
+  getOrderData(payload)
     .then(res => {
       if(res) {
         dispatch({
