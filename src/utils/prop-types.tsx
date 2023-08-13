@@ -2,10 +2,22 @@ import { TypedUseSelectorHook, useSelector, useDispatch } from "react-redux";
 import { Action, ActionCreator } from "redux";
 import { ReactElement } from "react";
 import { ThunkAction, ThunkDispatch } from "redux-thunk";
-import { store } from "../../src/index";
+import { store } from "../services/store";
+import { RootState } from "../services/reducers";
 import { ORDER_REQUEST, ORDER_SUCCESS, ORDER_ERROR } from "../services/actions/order/order";
 import { RESET_CONSTRUCTOR } from "../services/actions/burger-constructor/burger-constructor";
 import { INGREDIENTS_REQUEST, INGREDIENTS_SUCCESS, INGREDIENTS_ERROR, MODAL_ADD_INGREDIENT, MODAL_DEL_INGREDIENT } from "../services/actions/burger-ingredients/burger-ingredients";
+import { TResetPasswordActions } from "../services/actions/auth/reset-password";
+import { TCurrentOrderActions } from "../services/actions/order/current-order";
+import { TIngrediensConstructorActions } from "../services/actions/burger-constructor/burger-constructor";
+import { TLoginActions } from "../services/actions/auth/auth";
+import { TWsActions } from "../services/actions/ws/ws-actions";
+import { TWsAuthActions } from "../services/actions/ws/ws-auth-actions";
+
+
+
+//import { TIngredientInfoActions } from "../services/actions/ingredient";
+//import { TOrderActions } from "../services/actions/order";
 
 
 export type TServerResponse<T> = {
@@ -88,9 +100,9 @@ export type TIngredient = {
   id: string;
 };
 
-export type TConstructorIngredient = TIngredient & {
+/*export type TConstructorIngredient = TIngredient & {
   id: string;
-};
+};*/
 
 export type TConstructorState = {
   bun: TIngredient | null;
@@ -126,7 +138,7 @@ export type TOrder = {
   _id: string;
   name: string;
   ingredients: Array<string>;
-  status: TOrderStatus;
+  status: TOrderStatus; //string
   number: number;
   createdAt: string;
   updatedAt: string;
@@ -145,12 +157,6 @@ export type TDragged = {
   id: number;
   ingredient: TIngredient;
 };
-
-export enum Category {
-  BUN = "bun",
-  SAUCE = "sauce",
-  MAIN = "main",
-}
 
 
 export type TModal = {
@@ -188,19 +194,19 @@ export type TBurgerConstructorActions =
   | TAddBun
   | TDeleteIngredient
   | TMoveIngredient
-  | TClearConstructor;*/
+  | TClearConstructor;*/ 
 
 
-export type RootState = ReturnType<typeof store.getState>;
 
-export type AppDispatch = typeof store.dispatch;
 
-export type TApplicationActions = TGetIngredientsActions | TGetNumberOrderActions 
-/*| TIngredientDetailsActions | TBurgerConstructorActions | TRestorePasswordActions
- | TRegisterUserActions | TResetPasswordActions | TLoginActions | TUpdateTokenActions | 
- TGetUserActions | TLogoutActions | TPatchUserActions | TWebSocketActions | TWebSocketUserActions*/ ;
+
+
+export type TApplicationActions = TGetIngredientsActions | TGetNumberOrderActions | TResetPasswordActions
+| TCurrentOrderActions | TIngrediensConstructorActions | TLoginActions | TWsActions | TWsAuthActions;
 
 export type AppThunk<TReturn = void> = ActionCreator<ThunkAction<TReturn, RootState, Action, TApplicationActions>>;
+
+export type AppDispatch = typeof store.dispatch;
 
 type DispatchFunc = () => AppDispatch | AppThunk;
 

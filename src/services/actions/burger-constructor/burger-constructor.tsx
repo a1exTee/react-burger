@@ -18,6 +18,7 @@ export interface IAddIngredient {
   
   type IngredientOrder = {
     dragIndex: number,
+    hoverIndex: number
   };
   
   export interface IIngredientMove {
@@ -27,8 +28,9 @@ export interface IAddIngredient {
   
   export interface IAddBuns {
     readonly type: typeof ADD_BUN_IN_CONSTRUCTOR;
-    bun: Array<TIngredient>
+    bun: TIngredient 
   }
+  
   
   export interface IDeleteAllIngredient {
     readonly type: typeof RESET_CONSTRUCTOR;
@@ -43,26 +45,26 @@ export interface IAddIngredient {
     ;
   
 
-  /*export const addIngredientInConstructor = (payload: TIngredient): IAddIngredient => ({
+  export const addIngredientInConstructor = (ingredientsConstructor: TIngredient): IAddIngredient => ({
     type: ADD_IN_CONSTRUCTOR,
     ingredientsConstructor
   });
   
-  export const deleteIngredient = (payload: string): IDeleteIngredient => ({
+  export const deleteIngredient = (id: string): IDeleteIngredient => ({
     type: DEL_IN_CONSTRUCTOR,
-    payload
+    id
   });
   
-  export const moveIngredientInConstructor = (payload: IngredientOrder): IIngredientMove => ({
+  export const moveIngredientInConstructor = (item: IngredientOrder): IIngredientMove => ({
     type: REPLACE_INGREDIENT,
-    payload
+    item
   });
   
-  export const addBunsInConstructor = (payload: Array<TIngredient>): IAddBuns => ({
+  export const addBunsInConstructor = (bun: TIngredient): IAddBuns => ({
     type: ADD_BUN_IN_CONSTRUCTOR,
-    payload
+    bun
   });
   
   export const deleteAllIngredients = (): IDeleteAllIngredient => ({
     type: RESET_CONSTRUCTOR
-  });*/
+  });

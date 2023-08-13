@@ -14,8 +14,8 @@ export const getIngredients: AppThunk<void> = () =>  {
     dispatch({
       type: INGREDIENTS_REQUEST,
     });
-    // @ts-ignore
-    requestIngredients(`${apiUrl}ingredients`)
+  
+    requestIngredients()
       .then((data) => {
         dispatch({ type: INGREDIENTS_SUCCESS, ingr: data.data });
       })
@@ -26,11 +26,11 @@ export const getIngredients: AppThunk<void> = () =>  {
   };
 }
 
-export const modalAddIngredient = (res: object) => ({
+export const modalAddIngredient = (res: TIngredient) => ({
   type: MODAL_ADD_INGREDIENT,
   ingr: res,
 });
 
 export const modalDeleteIngredient = () => ({
   type: MODAL_DEL_INGREDIENT,
-});
+}); 

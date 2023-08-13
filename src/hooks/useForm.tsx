@@ -1,27 +1,25 @@
-import { useState, ChangeEvent } from "react";
+import React, { useState } from 'react';
+import {
+  TypedUseSelectorHook,
+  useDispatch as dispatchHook,
+  useSelector as selectorHook,
+} from 'react-redux';
+import { AppDispatch, AppThunk } from '../utils/prop-types';
+import { RootState } from '../services/reducers';
 
-export type TFormValues = {
-  name?: string;
-  email?: string;
-  password?: string;
-  code?: string;
-  token?: string;
-};
 
-export function useForm(
-  inputValues: TFormValues = {
-    name: "",
-    email: "",
-    password: "",
-    code: "",
-    token: ''
-  }) {
-    const [values, setValues] = useState<TFormValues>(inputValues);
+export const useSelector: TypedUseSelectorHook<RootState> = selectorHook;
 
-    const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
-      const {value, name} = event.target;
-      setValues({...values, [name]: value});
-    };
-    return {values, setValues, handleChange };
-};
+type AppDispatchFunc = () => AppDispatch | AppThunk;
+export const useDispatch: AppDispatchFunc = dispatchHook;
 
+
+export function useForm(inputValues: any) {
+  const [values, setValues] = useState(inputValues);
+
+  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const {value, name} = event.target;
+    setValues({...values, [name]: value});
+  };
+  return {values, handleChange, setValues};
+}
