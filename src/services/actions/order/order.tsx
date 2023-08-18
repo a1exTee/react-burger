@@ -19,7 +19,7 @@ export const getOrderData = (payload: Array<string>) => {
   })
   .then((res) => checkResponse(res))
 }
-
+ 
 export const sendOrder: AppThunk = (payload: Array<string>) => {
   return function(dispatch: AppDispatch) {
   dispatch({
@@ -46,4 +46,4 @@ export const sendOrder: AppThunk = (payload: Array<string>) => {
         type: ORDER_ERROR,
       })
     })
-}}
+}} 

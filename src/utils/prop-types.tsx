@@ -13,6 +13,7 @@ import { TIngrediensConstructorActions } from "../services/actions/burger-constr
 import { TLoginActions } from "../services/actions/auth/auth";
 import { TWsActions } from "../services/actions/ws/ws-actions";
 import { TWsAuthActions } from "../services/actions/ws/ws-auth-actions";
+import { TIngredientsDataActions } from "../services/actions/burger-ingredients/burger-ingredients";
 
 
 
@@ -202,7 +203,7 @@ export type TBurgerConstructorActions =
 
 
 export type TApplicationActions = TGetIngredientsActions | TGetNumberOrderActions | TResetPasswordActions
-| TCurrentOrderActions | TIngrediensConstructorActions | TLoginActions | TWsActions | TWsAuthActions;
+| TCurrentOrderActions | TIngrediensConstructorActions | TLoginActions | TWsActions | TWsAuthActions | TIngredientsDataActions;
 
 export type AppThunk<TReturn = void> = ActionCreator<ThunkAction<TReturn, RootState, Action, TApplicationActions>>;
 

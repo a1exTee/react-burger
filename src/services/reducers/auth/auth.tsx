@@ -6,7 +6,7 @@ import {
   USER_DATA_REQUEST,
   USER_DATA_SUCCESS,
   USER_DATA_FAILED,
-  REFRESH_ACCESS_TOKEN_FAILED,
+  REFRESH_ACCESS_TOKEN_REQUEST_FAILED,
   REFRESH_ACCESS_TOKEN_SUCCESS,
   REFRESH_ACCESS_TOKEN_REQUEST,
   USER_DATA_UPDATE_REQUEST,
@@ -34,7 +34,7 @@ type TInitialState = {
   refreshToken: string
 }
 
-const initialState: TInitialState = {
+export const initialState: TInitialState = {
   loginRequest: false,
   loginRequestFailed: false,
   userDataLoaded: false,
@@ -119,8 +119,8 @@ export const userInfoReducer = (state = initialState, action: TLoginActions) => 
         accessToken: action.payload.accessToken.split("Bearer ")[1],
         refreshToken: action.payload.refreshToken
       };
-    case REFRESH_ACCESS_TOKEN_FAILED:
-      return { ...state, accessTokenRequestFailed: false, };
+    case REFRESH_ACCESS_TOKEN_REQUEST_FAILED:
+      return { ...state, accessTokenRequestFailed: true };
     default:
       return state;
   }

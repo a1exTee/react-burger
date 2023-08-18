@@ -2,14 +2,14 @@ import {ORDER_REQUEST, ORDER_SUCCESS, ORDER_ERROR} from "../../actions/order/ord
 import { TGetNumberOrderActions } from "../../../utils/prop-types";
 
 type TGetNumberOrderState = {
-  order: number,
+  order: number | undefined,
   orderRequest: boolean,
   orderError: boolean,
   name: string,
 }
 
-const initialState: TGetNumberOrderState = {
-  order: 0,
+export const initialState: TGetNumberOrderState = {
+  order: undefined,
   orderRequest: false,
   orderError: false,
   name: '',

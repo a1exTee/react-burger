@@ -44,6 +44,7 @@ const BurgerConstructor: FC = () => {
   const createOrder = () => {
     if (getCookie('accessToken') && isAuthorized && bunConstructor) {
       const ingredientsId = ingredients?.map((ingredient: TIngredient) => ingredient._id).concat(bunConstructor._id);
+      console.log(ingredientsId);
       dispatch(sendOrder(ingredientsId));
       dispatch(toggleModalOrder(true));
     } else {

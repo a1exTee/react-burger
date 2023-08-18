@@ -5,17 +5,17 @@ type TInitialState ={
   information: TOrder | null
 }
 
-const initialState: TInitialState = {
+export const initialState: TInitialState = {
   information: null
 }
 
 export const currentOrderReducer = (state = initialState, action: TCurrentOrderActions) => {
   switch (action.type) {
     case ADD_CURRENT_ORDER_INFO: {
-      return { information: action.payload };
+      return { ...state, order: action.payload };
     }
     case DELETE_CURRENT_ORDER_INFO: {
-      return { information: null };
+      return { ...state, order: null };
     }
     default: {
       return state;

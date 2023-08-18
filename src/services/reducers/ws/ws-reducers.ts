@@ -15,7 +15,7 @@ type TinitialState = {
   totalToday: number
 }
 
-const initialState: TinitialState = {
+export const initialState: TinitialState = {
   wsConnected: false,
   wsError: undefined,
   orders: null,
@@ -25,14 +25,12 @@ const initialState: TinitialState = {
 
 export const wsReducer = (state = initialState, action: TWsActions) => {
   switch (action.type) {
-
     case WS_CONNECTION_SUCCESS:
       return {
         ...state,
         wsError: undefined,
         wsConnected: true
       };
-
 
     case WS_CONNECTION_ERROR:
       return {
@@ -41,7 +39,6 @@ export const wsReducer = (state = initialState, action: TWsActions) => {
         wsConnected: false
       };
 
-
     case WS_CONNECTION_CLOSED:
       return {
         ...state,
@@ -49,8 +46,6 @@ export const wsReducer = (state = initialState, action: TWsActions) => {
         wsConnected: false,
         orders: null,
       };
-
-
     case WS_GET_ORDERS:
       return {
         ...state,

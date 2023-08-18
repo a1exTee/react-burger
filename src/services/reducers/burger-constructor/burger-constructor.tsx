@@ -5,10 +5,10 @@ import { TIngrediensConstructorActions } from "../../actions/burger-constructor/
 
 type TBurgerConstructorReducer = {
   ingredientsConstructor: Array<TIngredient>,
-  bun?: TIngredient | null
+  bun?: TIngredient | null 
 }
 
-  const initialState: TBurgerConstructorReducer = {
+  export const initialState: TBurgerConstructorReducer = {
     ingredientsConstructor: [],
     bun: null,
   };

@@ -5,27 +5,27 @@ import {
 import { AppDispatch, AppThunk } from '../../../utils/prop-types';
 
 export const USER_LOGIN_REQUEST: 'USER_LOGIN_REQUEST' = 'USER_LOGIN_REQUEST';
-export const USER_LOGIN_SUCCESS: 'USER_LOGIN_SUCCESS' = 'USER_LOGIN_SUCCESS';
+export const USER_LOGIN_SUCCESS: 'USER_LOGIN_SUCCESS' = 'USER_LOGIN_SUCCESS';//впервые получаем данные пользователя, токены и сохраняем куки.
 export const USER_LOGIN_FAILED: 'USER_LOGIN_FAILED' = 'USER_LOGIN_FAILED';
 export const USER_LOGOUT: 'USER_LOGOUT' = 'USER_LOGOUT';
 
 export const USER_DATA_REQUEST: 'USER_DATA_REQUEST' = 'USER_DATA_REQUEST';
-export const USER_DATA_SUCCESS: 'USER_DATA_SUCCESS' = 'USER_DATA_SUCCESS';
-export const USER_DATA_FAILED: 'USER_DATA_FAILED' = 'USER_DATA_FAILED';
+export const USER_DATA_SUCCESS: 'USER_DATA_SUCCESS' = 'USER_DATA_SUCCESS';//получаем только данные по сохраненным accessToken в куках
+export const USER_DATA_FAILED: 'USER_DATA_FAILED' = 'USER_DATA_FAILED';//рефрешим accessToken в куках через REFRESH_ACCESS_TOKEN_REQUEST
 
 export const USER_DATA_UPDATE_REQUEST: 'USER_DATA_UPDATE_REQUEST' = 'USER_DATA_UPDATE_REQUEST';
 export const USER_DATA_UPDATE_SUCCESS: 'USER_DATA_UPDATE_SUCCESS' = 'USER_DATA_UPDATE_SUCCESS';
-export const USER_DATA_UPDATE_FAILED: 'USER_DATA_UPDATE_FAILED' = 'USER_DATA_UPDATE_FAILED';
+export const USER_DATA_UPDATE_FAILED: 'USER_DATA_UPDATE_FAILED' = 'USER_DATA_UPDATE_FAILED';//рефрешим accessToken в куках через REFRESH_ACCESS_TOKEN_REQUEST
 
 export const REFRESH_ACCESS_TOKEN_REQUEST: 'REFRESH_ACCESS_TOKEN_REQUEST' = 'REFRESH_ACCESS_TOKEN_REQUEST';
-export const REFRESH_ACCESS_TOKEN_SUCCESS: 'REFRESH_ACCESS_TOKEN_SUCCESS' = 'REFRESH_ACCESS_TOKEN_SUCCESS';
-export const REFRESH_ACCESS_TOKEN_FAILED: 'REFRESH_ACCESS_TOKEN_FAILED' = 'REFRESH_ACCESS_TOKEN_FAILED';
+export const REFRESH_ACCESS_TOKEN_SUCCESS: 'REFRESH_ACCESS_TOKEN_SUCCESS' = 'REFRESH_ACCESS_TOKEN_SUCCESS';//рефрешим accessToken и отправляем запрос на данные
+export const REFRESH_ACCESS_TOKEN_REQUEST_FAILED: 'REFRESH_ACCESS_TOKEN_REQUEST_FAILED' = 'REFRESH_ACCESS_TOKEN_REQUEST_FAILED';
 
 
 export interface IUserLoginRequest {
-  readonly type: typeof USER_LOGIN_REQUEST; 
+  readonly type: typeof USER_LOGIN_REQUEST;
 }
-type TLoginData = {
+export type TLoginData = {
   accessToken: string,
   refreshToken: string,
   success: boolean,
@@ -76,7 +76,7 @@ export interface IRefreshAccessTokenSuccess {
   payload: TLoginData
 }
 export interface IRefreshAccessTokenFailed {
-  readonly type: typeof REFRESH_ACCESS_TOKEN_FAILED;
+  readonly type: typeof REFRESH_ACCESS_TOKEN_REQUEST_FAILED;
 }
 
 
@@ -97,7 +97,7 @@ export type TLoginActions =
   | IRefreshAccessTokenFailed
   ;
 
-
+// Генераторы экшенов
 export const userLoginRequest = (): IUserLoginRequest => ({
   type: USER_LOGIN_REQUEST,
 });
@@ -142,7 +142,7 @@ export const refreshAccessTokenSuccess = (payload: TLoginData): IRefreshAccessTo
   payload
 });
 export const refreshAccessTokenFailed = (): IRefreshAccessTokenFailed => ({
-  type: REFRESH_ACCESS_TOKEN_FAILED,
+  type: REFRESH_ACCESS_TOKEN_REQUEST_FAILED,
 });
 //----------------------------------------------------------------
 
@@ -159,7 +159,7 @@ export const loginUser: AppThunk = (userInfo: {email: string, password: string})
     }).catch(e => {
       dispatch(userLoginFailed());
     })
-  } 
+  }
 }
 
 export const userLogout: AppThunk = (goToPage: ()=>void) => {
@@ -176,7 +176,6 @@ export const userLogout: AppThunk = (goToPage: ()=>void) => {
 }
 
 export const getUserData: AppThunk = () => {
-  
   return function (dispatch: AppDispatch) {
     dispatch(userDataRequest());
     getUser().then(res => {
@@ -190,10 +189,10 @@ export const getUserData: AppThunk = () => {
   }
 }
 
-export const updateUserData: AppThunk =(userInfoReducer: {email: string, name: string}) => {
+export const updateUserData: AppThunk =(userInfo: {email: string, name: string}) => {
   return function (dispatch: AppDispatch) {
     dispatch(userDataUpdateRequest());
-    updateUser(userInfoReducer).then(res => {
+    updateUser(userInfo).then(res => {
       if (res && res.success) {
         dispatch(userDataUpdateSuccess(res));
       }
@@ -206,7 +205,6 @@ export const updateUserData: AppThunk =(userInfoReducer: {email: string, name: s
 export const refreshToken: AppThunk = () => {
   return function (dispatch: AppDispatch) {
     dispatch(refreshAccessTokenRequest());
-
     resetToken().then(res => {
       if (res && res.success) {
         dispatch(refreshAccessTokenSuccess(res));
