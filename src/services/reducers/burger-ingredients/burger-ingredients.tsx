@@ -8,8 +8,8 @@ type TGetIngredientsState = {
   selectedIngredient: null | object,
 }
 
-const initialState: TGetIngredientsState = {
-  ingredients: [],
+export const initialState: TGetIngredientsState = {
+  ingredients: null,
   ingredientsRequest: false,
   ingredientsChecker: false,
   selectedIngredient: null,
@@ -26,7 +26,7 @@ export const burgerIngredientsReducer = (state = initialState, action: TGetIngre
         ingredientsRequest: false,
         ingredients: action.ingr,
       };
-    }
+    } 
     case INGREDIENTS_ERROR: {
       return { ...initialState, ingredientsChecker: true, ingredientsRequest: false };
     }

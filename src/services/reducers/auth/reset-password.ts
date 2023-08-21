@@ -16,7 +16,7 @@ type TInitialState = {
   verificationSent: boolean
 };
 
-const initialState: TInitialState = {
+export const initialState: TInitialState = {
   emailRequest: false,
   emailRequestFailed: false,
   resetPasswordRequest: false,

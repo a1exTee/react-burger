@@ -6,22 +6,21 @@ import {
 } from '../../actions/ws/ws-auth-actions';
 import { TOrder } from '../../../utils/prop-types';
 
-type TinitialState = {
+type TInitialState = {
   wsAuthConnected: boolean,
   wsAuthError: string | undefined,
   orders: Array<TOrder> | null,
-  total: number,
-  totalToday: number
+  total: number | null,
+  totalToday: number | null
 }
 
-const initialState: TinitialState = {
+export const initialState: TInitialState = {
   wsAuthConnected: false,
   wsAuthError: undefined,
   orders: null,
-  total: 0,
-  totalToday: 0
+  total: null,
+  totalToday: null
 }
-
 
 export const wsAuthReducer = (state = initialState, action: TWsAuthActions) => {
   switch (action.type) {
@@ -31,22 +30,21 @@ export const wsAuthReducer = (state = initialState, action: TWsAuthActions) => {
         wsAuthError: undefined,
         wsAuthConnected: true
       };
-
     case WS_AUTH_CONNECTION_ERROR:
       return {
         ...state,
         wsAuthError: action.payload,
         wsAuthConnected: false
       };
-
     case WS_AUTH_CONNECTION_CLOSED:
       return {
         ...state,
         wsAuthError: undefined,
         wsAuthConnected: false,
         orders: null,
+        total: null,
+        totalToday: null
       };
-
     case WS_GET_AUTH_ORDERS:
       return {
         ...state,

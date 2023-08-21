@@ -30,7 +30,7 @@ function Modal({ title, closeModal, children }: TModal) {
             <ModalOverlay onClick={closeModal} />
             <div className={`${modalStyles.modal} p-10`}>
                 <div className={`${modalStyles.modalContent}`}>
-                    <div className={modalStyles.wrapCloseIcon}><CloseIcon type='primary' onClick={closeModal} /></div>
+                    <div className={modalStyles.wrapCloseIcon} data-test="close-icon"><CloseIcon type='primary' onClick={closeModal} /></div>
                     <div className={modalStyles.modalHeader}>
                         <h2 className='text text_type_main-large'>{title}</h2>
                     </div>
