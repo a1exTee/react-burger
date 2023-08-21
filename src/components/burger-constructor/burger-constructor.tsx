@@ -4,7 +4,8 @@ import Modal from '../modal/modal';
 import {useMemo, FC} from 'react';
 import OrderDetails from './order-details/order-details';
 import { useDrop } from "react-dnd";
-import { sendOrder } from "../../services/actions/order/order";
+import { addOrderItems, deleteOrderInfo } from '../../services/actions/order/order';
+import { sentOrderInformation } from '../../services/actions/order/order';
 import { v4 as uuidv4 } from "uuid";
 import {toggleModalOrder} from '../../services/actions/modal/modal';
 import BurgerConstructorItem from '../burger-constructor/burger-constructor-item';
@@ -44,8 +45,8 @@ const BurgerConstructor: FC = () => {
   const createOrder = () => {
     if (getCookie('accessToken') && isAuthorized && bunConstructor) {
       const ingredientsId = ingredients?.map((ingredient: TIngredient) => ingredient._id).concat(bunConstructor._id);
-      console.log(ingredientsId);
-      dispatch(sendOrder(ingredientsId));
+      dispatch(addOrderItems(ingredientsId));
+      dispatch(sentOrderInformation(ingredientsId));
       dispatch(toggleModalOrder(true));
     } else {
       navigate('/login')
@@ -53,6 +54,7 @@ const BurgerConstructor: FC = () => {
   }
 
   const closeModal = () => {
+    dispatch(deleteOrderInfo());
     dispatch(toggleModalOrder(false));
   }
 
@@ -67,14 +69,14 @@ const BurgerConstructor: FC = () => {
 
      return (
       <div className={`${burgerConstructorStyle.burgerConstructorCol} custom-scroll`}>
-        <ul ref={dropTarget}>
+        <ul ref={dropTarget} data-test="drop-container">
           {!bunConstructor
             ? 
             <div>
               <p>Перетащите булку</p>
             </div>
             :
-            <li className={`${burgerConstructorStyle.ingredient} pl-8 pr-4`}>
+            <li className={`${burgerConstructorStyle.ingredient} pl-8 pr-4`} data-test={`bun-top`}>
               <ConstructorElement
                 text={`${bunConstructor!.name} (верх)`}
                 thumbnail={bunConstructor!.image_mobile}
@@ -102,7 +104,7 @@ const BurgerConstructor: FC = () => {
               <p>Перетащите булку</p>
             </div>
             :               
-            <li key={bunConstructor!.id} className={`${burgerConstructorStyle.element} pl-8 pr-4`}>
+            <li key={bunConstructor!.id} className={`${burgerConstructorStyle.element} pl-8 pr-4`} data-test={`bun-bottom`}>
               <ConstructorElement
                 text={`${bunConstructor!.name} (низ)`}
                 thumbnail={bunConstructor!.image_mobile}

@@ -20,10 +20,11 @@ describe('Root Reducer', () => {
         isModalOrder: false,
       },
       orderReducer: {
-        order: undefined,
-        orderRequest: false,
-        orderError: false,
-        name: '',
+        orderNumber: null,
+        orderNumberRequest: false,
+        orderNumberFailed: false,
+        isLoaded: false,
+        orderItems: [],
       },
       userInfoReducer: {
         loginRequest: false,

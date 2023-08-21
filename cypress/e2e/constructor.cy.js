@@ -1,23 +1,38 @@
 import '@testing-library/cypress/add-commands';
 
-describe('BurgerConstructor Drag and Drop', () => {
+const testUrl = "http://localhost:3000";
+
+describe('BurgerConstructor', function() {
+
   beforeEach(() => {
-    cy.visit('http://localhost:3000');
+    cy.visit(testUrl);
     cy.wait(5000);
+  })
+
+  it('Open modal', () => {
+    cy.get('[data-test="Краторная булка N-200i"]').click();
+    cy.contains('Детали ингредиента').should('exist');
   });
 
-  it('should allow dragging and dropping ingredients', () => {
-    // Выбираем ингредиент, который мы будем перетаскивать
-    cy.get('[class^="ingredients-item_ingredientItem__"]').eq(2).as('ingredient');
+  it('Close modal on button', () => {
+    cy.get('[data-test="Краторная булка N-200i"]').click();
+    cy.get('[data-test="close-icon"]').click();
+    cy.contains('Детали ингредиента').should('not.exist');
+  })
 
-    // Выбираем контейнер для перетаскивания
-    cy.get('[class^="burger-constructor_burgerConstructorCol__"] > ul').as('constructorContainer');
+  it('Modal close on overlay', () => {
+    cy.get('[data-test="Краторная булка N-200i"]').click();
+    cy.get('[data-test="modal-overlay"]').click(1, 1);
+    cy.contains('Детали ингредиента').should('not.exist');
+  })
 
-    // Перетаскиваем ингредиент в контейнер
-    cy.get('@ingredient').trigger('mousedown', { button: 0 });
-    cy.get('@constructorContainer').trigger('mousemove').trigger('mouseup', { force: true });
+  it('DND', () => {
+    cy.get('[data-test="bun-top"]').should('not.exist');
+    cy.get('[data-test="bun-bottom"]').should('not.exist');
+    cy.get('[data-test="Краторная булка N-200i"]').trigger("dragstart");
+    cy.get('[data-test="drop-container"]').trigger('drop');
+    cy.get('[data-test="bun-top"]').should('exist');
+    cy.get('[data-test="bun-bottom"]').should('exist');
+  })
 
-    // Проверяем, что ингредиент успешно добавлен в контейнер
-    cy.get('[class^="burger-constructor_burgerConstructorCol__"] > ul').should('have.length', 1);
-  });
 });

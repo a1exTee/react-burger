@@ -4,7 +4,6 @@ import { ReactElement } from "react";
 import { ThunkAction, ThunkDispatch } from "redux-thunk";
 import { store } from "../services/store";
 import { RootState } from "../services/reducers";
-import { ORDER_REQUEST, ORDER_SUCCESS, ORDER_ERROR } from "../services/actions/order/order";
 import { RESET_CONSTRUCTOR } from "../services/actions/burger-constructor/burger-constructor";
 import { INGREDIENTS_REQUEST, INGREDIENTS_SUCCESS, INGREDIENTS_ERROR, MODAL_ADD_INGREDIENT, MODAL_DEL_INGREDIENT } from "../services/actions/burger-ingredients/burger-ingredients";
 import { TResetPasswordActions } from "../services/actions/auth/reset-password";
@@ -70,20 +69,6 @@ export type TGetIngredientsFailed = {
   error: string;
 };
 
-export type TGetNumberOrder = {
-  readonly type: typeof ORDER_REQUEST;
-};
-
-export type TGetNumberOrderSuccess = {
-  readonly type: typeof ORDER_SUCCESS;
-  name: string;
-  number: number
-};
-
-export type TGetNumberOrderFailed = {
-  readonly type: typeof ORDER_ERROR;
-  error?: string;
-};
 
 export type TIngredient = {
   _id: string;
@@ -182,11 +167,7 @@ export type TGetIngredientsActions =
   | TGetIngredientsFailed
   | ImodalAddIngredient
   | ImodalDeleteIngredient;
-export type TGetNumberOrderActions =
-  | TGetNumberOrder
-  | TGetNumberOrderSuccess
-  | TGetNumberOrderFailed
-  | TClearConstructor;
+
 /*export type TIngredientDetailsActions =
   | TSelectIngredient
   | TDeleteInfoIngredient;
@@ -199,10 +180,7 @@ export type TBurgerConstructorActions =
 
 
 
-
-
-
-export type TApplicationActions = TGetIngredientsActions | TGetNumberOrderActions | TResetPasswordActions
+export type TApplicationActions = TGetIngredientsActions | TResetPasswordActions
 | TCurrentOrderActions | TIngrediensConstructorActions | TLoginActions | TWsActions | TWsAuthActions | TIngredientsDataActions;
 
 export type AppThunk<TReturn = void> = ActionCreator<ThunkAction<TReturn, RootState, Action, TApplicationActions>>;
@@ -213,4 +191,3 @@ type DispatchFunc = () => AppDispatch | AppThunk;
 
 export const useAppSelector: TypedUseSelectorHook<RootState> = useSelector;
 export const useAppDispatch: DispatchFunc = useDispatch;
-

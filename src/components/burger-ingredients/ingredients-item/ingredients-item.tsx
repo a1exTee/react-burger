@@ -48,6 +48,7 @@ const IngredientsItem : FC<{ ingredient: TIngredient }> = ({
     <div 
       ref={dragRef} 
       className={`${style.ingredientItem} ${isDragging && style.drag}`} 
+      data-test={ingredient.name}
     >
        <Link to={`/ingredients/${ingredient._id}`}
           state={{ background: location }}
